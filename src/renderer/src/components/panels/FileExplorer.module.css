@@ -1,0 +1,108 @@
+.explorer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-size: 13px;
+}
+
+.toolbar {
+  padding: 8px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  gap: 6px;
+}
+
+.btnPrimary,
+.btnSecondary {
+  flex: 1;
+  padding: 6px 10px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  text-align: center;
+  transition: all var(--transition-fast);
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--color-text-primary);
+}
+
+.btnPrimary:hover,
+.btnSecondary:hover {
+  background: var(--color-bg-hover);
+  box-shadow: 0 0 8px rgba(0, 255, 170, 0.3);
+  border-color: var(--color-accent);
+}
+
+.btnSecondary {
+  flex: 0 0 auto;
+  min-width: 70px;
+}
+
+.currentPath {
+  padding: 6px 10px;
+  background: var(--color-bg-tertiary);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: var(--spacing-sm);
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 13px;
+  border-left: 2px solid transparent;
+  user-select: none;
+}
+
+.fileItem:hover {
+  background: var(--color-bg-hover);
+  border-left-color: var(--color-accent);
+}
+
+.arrow {
+  flex-shrink: 0;
+  width: 12px;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  transition: transform 0.2s ease;
+}
+
+.fileIcon {
+  font-size: 14px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.fileName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text-primary);
+  font-size: 13px;
+}

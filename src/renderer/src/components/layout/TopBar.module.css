@@ -1,0 +1,145 @@
+.topBarContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.topBar {
+  height: var(--topbar-height);
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-md);
+  gap: var(--spacing-md);
+  user-select: none;
+  -webkit-app-region: drag;
+}
+
+.topBar > * {
+  -webkit-app-region: no-drag;
+}
+
+.left {
+  flex-shrink: 0;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-mono);
+}
+
+.logo {
+  font-size: var(--font-size-lg);
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
+}
+
+.title {
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-sm);
+}
+
+.center {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: thin;
+}
+
+.tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+.tab:hover {
+  background: var(--color-bg-hover);
+}
+
+.tab.active {
+  background: var(--color-bg-primary);
+  border-bottom: 2px solid var(--color-accent);
+}
+
+.tabName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--font-size-sm);
+}
+
+.modified {
+  color: var(--color-warning);
+  font-size: var(--font-size-xs);
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  opacity: 0.6;
+  transition: all var(--transition-fast);
+}
+
+.closeBtn:hover {
+  opacity: 1;
+  background: var(--color-bg-hover);
+}
+
+.right {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  font-size: var(--font-size-lg);
+  transition: all var(--transition-fast);
+  opacity: 0.8;
+}
+
+.iconBtn:hover {
+  opacity: 1;
+  background: var(--color-bg-hover);
+  box-shadow: var(--shadow-glow);
+}
