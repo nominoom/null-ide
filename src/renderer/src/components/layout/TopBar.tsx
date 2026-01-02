@@ -6,6 +6,23 @@ import styles from './TopBar.module.css';
 
 const TopBar: React.FC = () => {
   const { tabs, activeTabId, setActiveTab, closeTab, closeAllTabs, closeOtherTabs, openSettings, openAbout, mode, setMode } = useStore();
+  const tabsRef = React.useRef<HTMLDivElement>(null);
+
+  // Enable horizontal scroll with mouse wheel
+  React.useEffect(() => {
+    const tabsElement = tabsRef.current;
+    if (!tabsElement) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        tabsElement.scrollLeft += e.deltaY;
+      }
+    };
+
+    tabsElement.addEventListener('wheel', handleWheel, { passive: false });
+    return () => tabsElement.removeEventListener('wheel', handleWheel);
+  }, []);
 
   const handleContextMenu = (e: React.MouseEvent, tabId: string) => {
     e.preventDefault();
@@ -87,7 +104,7 @@ const TopBar: React.FC = () => {
         </div>
 
         <div className={styles.center}>
-          <div className={styles.tabs}>
+          <div className={styles.tabs} ref={tabsRef}>
             {tabs.map((tab) => (
               <div
                 key={tab.id}

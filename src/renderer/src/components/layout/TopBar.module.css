@@ -117,10 +117,24 @@
   overflow-x: auto;
   max-width: 100%;
   scrollbar-width: thin;
+  scroll-behavior: smooth;
 }
 
 .tabs::-webkit-scrollbar {
   height: 4px;
+}
+
+.tabs::-webkit-scrollbar-track {
+  background: var(--color-bg-tertiary);
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+.tabs::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
 }
 
 .tab {
