@@ -152,13 +152,16 @@ ipcMain.handle('fs:writeFile', async (event, filePath: string, content: string) 
 ipcMain.handle('fs:readDir', async (event, dirPath: string) => {
   try {
     const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
-    const items = entries.map((entry) => ({
+    // Limit to 500 items to prevent crashes
+    const limitedEntries = entries.slice(0, 500);
+    const items = limitedEntries.map((entry) => ({
       name: entry.name,
       isDirectory: entry.isDirectory(),
       path: path.join(dirPath, entry.name),
     }));
-    return { success: true, items };
+    return { success: true, items, truncated: entries.length > 500 };
   } catch (error: any) {
+    console.error('Error reading directory:', error);
     return { success: false, error: error.message };
   }
 });
@@ -319,29 +322,49 @@ const terminals = new Map<string, any>();
 
 ipcMain.handle('terminal:spawn', (event, terminalId: string, shell: string = 'powershell.exe', cwd?: string) => {
   try {
+    console.log(`Spawning terminal ${terminalId} with shell ${shell}`);
     const ptyProcess = spawn(shell, [], {
       cwd: cwd || process.cwd(),
       env: process.env,
       shell: true,
+      windowsHide: true,
     });
+
+    if (!ptyProcess || !ptyProcess.pid) {
+      throw new Error('Failed to spawn terminal process');
+    }
 
     terminals.set(terminalId, ptyProcess);
 
     ptyProcess.stdout?.on('data', (data) => {
-      mainWindow?.webContents.send('terminal:data', terminalId, data.toString());
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('terminal:data', terminalId, data.toString());
+      }
     });
 
     ptyProcess.stderr?.on('data', (data) => {
-      mainWindow?.webContents.send('terminal:data', terminalId, data.toString());
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('terminal:data', terminalId, data.toString());
+      }
     });
 
     ptyProcess.on('exit', (code) => {
-      mainWindow?.webContents.send('terminal:exit', terminalId, code);
+      console.log(`Terminal ${terminalId} exited with code ${code}`);
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('terminal:exit', terminalId, code);
+      }
       terminals.delete(terminalId);
     });
 
+    ptyProcess.on('error', (err) => {
+      console.error(`Terminal ${terminalId} error:`, err);
+      terminals.delete(terminalId);
+    });
+
+    console.log(`Terminal ${terminalId} spawned successfully with PID ${ptyProcess.pid}`);
     return { success: true, pid: ptyProcess.pid };
   } catch (error: any) {
+    console.error('Error spawning terminal:', error);
     return { success: false, error: error.message };
   }
 });

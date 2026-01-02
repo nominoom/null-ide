@@ -1,4 +1,4 @@
-.terminalPanel {
+﻿.terminalPanel {
   position: relative;
   background: var(--color-bg-primary);
   border-top: 1px solid var(--color-border);
@@ -15,86 +15,90 @@
   cursor: ns-resize;
   background: transparent;
   z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.resizeHandle:hover .resizeLine,
-.resizeHandle.resizing .resizeLine {
+.resizeHandle:hover {
   background: var(--color-accent);
 }
 
-.resizeLine {
-  width: 60px;
-  height: 2px;
-  background: var(--color-border);
-  border-radius: 2px;
-  transition: all 0.2s ease;
-}
-
-.toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 32px;
-  padding: 0 12px;
+.terminalHeader {
   background: var(--color-bg-elevated);
   border-bottom: 1px solid var(--color-border);
-  user-select: none;
+  padding: 4px 8px;
 }
 
-.title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--color-text-primary);
-  font-weight: 500;
-}
-
-.icon {
-  font-size: 14px;
-}
-
-.actions {
+.terminalTabs {
   display: flex;
   gap: 4px;
+  align-items: center;
 }
 
-.btn {
-  padding: 4px 8px;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 3px;
+.terminalTab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
-  transition: all 0.15s ease;
   color: var(--color-text-secondary);
+  transition: all 0.2s;
 }
 
-.btn:hover {
+.terminalTab:hover {
   background: var(--color-bg-hover);
-  border-color: var(--color-border);
   color: var(--color-text-primary);
 }
 
-.terminalContainer {
+.terminalTab.active {
+  background: var(--color-accent);
+  color: #000;
+  border-color: var(--color-accent);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.newTerminalButton {
+  padding: 4px 12px;
+  background: var(--color-accent);
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.newTerminalButton:hover {
+  opacity: 0.9;
+}
+
+.terminalContent {
   flex: 1;
   overflow: hidden;
-  padding: 8px;
 }
 
-/* Override xterm.js styles */
-.terminalContainer :global(.xterm) {
-  height: 100% !important;
-  padding: 0;
-}
-
-.terminalContainer :global(.xterm-viewport) {
-  background-color: transparent !important;
-}
-
-.terminalContainer :global(.xterm-screen) {
-  background-color: transparent !important;
+.terminalInstance {
+  width: 100%;
+  height: 100%;
 }

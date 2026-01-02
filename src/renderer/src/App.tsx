@@ -5,7 +5,7 @@ import LeftSidebar from './components/layout/LeftSidebar';
 import MainEditorArea from './components/layout/MainEditorArea';
 import RightSidebar from './components/layout/RightSidebar';
 import StatusBar from './components/layout/StatusBar';
-import TerminalPanel from './components/panels/TerminalPanel';
+import TerminalPanel from './components/panels/TerminalPanelMulti';
 import SettingsModal from './components/modals/SettingsModal';
 import AboutModal from './components/modals/AboutModal';
 import styles from './App.module.css';
