@@ -5,6 +5,15 @@
   flex-direction: column;
   background: var(--color-bg-primary);
   overflow: hidden;
+  transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app.galaxyMode {
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a0f2e 50%, #0a0a0f 100%);
+}
+
+.app.deepzeroMode {
+  background: var(--color-bg-primary);
 }
 
 .mainContainer {

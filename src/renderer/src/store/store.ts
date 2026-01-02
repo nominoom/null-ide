@@ -9,7 +9,39 @@ export interface EditorTab {
   modified: boolean;
 }
 
+export interface APIRequest {
+  id: string;
+  name: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  url: string;
+  headers: Record<string, string>;
+  body?: string;
+  timestamp: number;
+}
+
+export interface APIResponse {
+  status: number;
+  statusText: string;
+  headers: Record<string, string>;
+  data: unknown;
+  time: number;
+}
+
+export interface ToolResult {
+  id: string;
+  toolName: string;
+  timestamp: number;
+  input: unknown;
+  output: unknown;
+  success: boolean;
+  error?: string;
+}
+
 interface UIState {
+  // Mode switching
+  mode: 'deepzero' | 'galaxymind';
+  setMode: (mode: 'deepzero' | 'galaxymind') => void;
+  
   // Sidebar visibility
   leftSidebarVisible: boolean;
   rightSidebarVisible: boolean;
@@ -20,10 +52,16 @@ interface UIState {
   
   // Active sections
   activeLeftPanel: string;
+  activeGalaxyTool: string | null;
   
   // Editor tabs
   tabs: EditorTab[];
   activeTabId: string | null;
+  
+  // GalaxyMind state
+  apiRequests: APIRequest[];
+  apiHistory: Array<{ request: APIRequest; response: APIResponse }>;
+  toolResults: ToolResult[];
   
   // Editor settings
   editorSettings: {
@@ -50,6 +88,7 @@ interface UIState {
   toggleTerminal: () => void;
   setTerminalHeight: (height: number) => void;
   setActiveLeftPanel: (panel: string) => void;
+  setActiveGalaxyTool: (tool: string | null) => void;
   
   openTab: (tab: EditorTab) => void;
   closeTab: (tabId: string) => void;
@@ -61,6 +100,12 @@ interface UIState {
   setRightSidebarWidth: (width: number) => void;
   updateEditorSettings: (settings: Partial<UIState['editorSettings']>) => void;
   
+  // GalaxyMind actions
+  addAPIRequest: (request: APIRequest) => void;
+  addToAPIHistory: (request: APIRequest, response: APIResponse) => void;
+  addToolResult: (result: ToolResult) => void;
+  clearToolResults: () => void;
+  
   openSettings: () => void;
   closeSettings: () => void;
   openAbout: () => void;
@@ -69,6 +114,7 @@ interface UIState {
 
 export const useStore = create<UIState>((set) => ({
   // Initial state
+  mode: 'deepzero',
   leftSidebarVisible: true,
   rightSidebarVisible: true,
   terminalVisible: false,
@@ -76,7 +122,11 @@ export const useStore = create<UIState>((set) => ({
   leftSidebarWidth: 250,
   rightSidebarWidth: 250,
   activeLeftPanel: 'explorer',
+  activeGalaxyTool: null,
   selectedText: '',
+  apiRequests: [],
+  apiHistory: [],
+  toolResults: [],
   editorSettings: {
     fontSize: 15,
     tabSize: 2,
@@ -134,12 +184,26 @@ Access DeepHat AI - your uncensored hacker AI assistant - in the right sidebar.
   theme: 'dark',
   
   // Actions
+  setMode: (mode) => set({ mode }),
   setSelectedText: (text) => set({ selectedText: text }),
   toggleLeftSidebar: () => set((state) => ({ leftSidebarVisible: !state.leftSidebarVisible })),
   toggleRightSidebar: () => set((state) => ({ rightSidebarVisible: !state.rightSidebarVisible })),
   toggleTerminal: () => set((state) => ({ terminalVisible: !state.terminalVisible })),
   setTerminalHeight: (height) => set({ terminalHeight: height }),
   setActiveLeftPanel: (panel) => set({ activeLeftPanel: panel }),
+  setActiveGalaxyTool: (tool) => set({ activeGalaxyTool: tool }),
+  
+  // GalaxyMind actions
+  addAPIRequest: (request) => set((state) => ({ 
+    apiRequests: [...state.apiRequests, request] 
+  })),
+  addToAPIHistory: (request, response) => set((state) => ({ 
+    apiHistory: [...state.apiHistory, { request, response }] 
+  })),
+  addToolResult: (result) => set((state) => ({ 
+    toolResults: [result, ...state.toolResults].slice(0, 100) // Keep last 100
+  })),
+  clearToolResults: () => set({ toolResults: [] }),
   
   openTab: (tab) =>
     set((state) => {

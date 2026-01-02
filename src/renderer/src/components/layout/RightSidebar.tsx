@@ -4,6 +4,7 @@ import { RobotIcon, RefreshIcon } from '../icons/Icons';
 import styles from './RightSidebar.module.css';
 
 const RightSidebar: React.FC = () => {
+  const mode = useStore((state) => state.mode);
   const rightSidebarWidth = useStore((state) => state.rightSidebarWidth);
   const setRightSidebarWidth = useStore((state) => state.setRightSidebarWidth);
   const [isResizing, setIsResizing] = useState(false);
@@ -85,7 +86,9 @@ const RightSidebar: React.FC = () => {
           <span className={styles.icon}><RobotIcon size={24} /></span>
           <div className={styles.titleText}>
             <div className={styles.name}>DeepHat AI</div>
-            <div className={styles.subtitle}>Uncensored Hacker AI</div>
+            <div className={styles.subtitle}>
+              {mode === 'deepzero' ? 'Code Assistant' : 'Security Expert'}
+            </div>
           </div>
         </div>
         <button className={styles.reloadBtn} onClick={handleReload} title="Reload">

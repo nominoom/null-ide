@@ -5,7 +5,7 @@ import { SettingsIcon, InfoIcon } from '../icons/Icons';
 import styles from './TopBar.module.css';
 
 const TopBar: React.FC = () => {
-  const { tabs, activeTabId, setActiveTab, closeTab, closeAllTabs, closeOtherTabs, openSettings, openAbout } = useStore();
+  const { tabs, activeTabId, setActiveTab, closeTab, closeAllTabs, closeOtherTabs, openSettings, openAbout, mode, setMode } = useStore();
 
   const handleContextMenu = (e: React.MouseEvent, tabId: string) => {
     e.preventDefault();
@@ -69,6 +69,25 @@ const TopBar: React.FC = () => {
         </div>
 
         <div className={styles.center}>
+          {/* Mode Toggle */}
+          <div className={styles.modeToggle}>
+            <button
+              className={`${styles.modeButton} ${mode === 'deepzero' ? styles.active : ''}`}
+              onClick={() => setMode('deepzero')}
+            >
+              <span className={styles.modeIcon}>⚡</span>
+              DeepZero
+            </button>
+            <div className={styles.modeDivider}>|</div>
+            <button
+              className={`${styles.modeButton} ${mode === 'galaxymind' ? styles.active : ''}`}
+              onClick={() => setMode('galaxymind')}
+            >
+              <span className={styles.modeIcon}>🌌</span>
+              GalaxyMind
+            </button>
+          </div>
+
           <div className={styles.tabs}>
             {tabs.map((tab) => (
               <div

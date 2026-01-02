@@ -1,7 +1,7 @@
 {
   "name": "null-ide",
-  "version": "1.0.0",
-  "description": "Null IDE - The Ultimate Hacker & Master Programmer IDE by NullSec",
+  "version": "2.0.0",
+  "description": "The Ultimate Hacker & Master Programmer IDE by NullSec - Now with Dual-Mode System",
   "main": "dist/main/main.js",
   "author": "NullSec",
   "license": "MIT",

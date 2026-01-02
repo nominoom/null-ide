@@ -2,16 +2,19 @@ import React, { useEffect } from 'react';
 import { useStore } from './store/store';
 import TopBar from './components/layout/TopBar';
 import LeftSidebar from './components/layout/LeftSidebar';
-import MainEditorArea from './components/layout/MainEditorArea';
 import RightSidebar from './components/layout/RightSidebar';
 import StatusBar from './components/layout/StatusBar';
 import TerminalPanel from './components/panels/TerminalPanelMulti';
 import SettingsModal from './components/modals/SettingsModal';
 import AboutModal from './components/modals/AboutModal';
+import DeepZero from './components/modes/DeepZero';
+import GalaxyMind from './components/modes/GalaxyMind';
+import './styles/animations.css';
 import styles from './App.module.css';
 
 const App: React.FC = () => {
   const {
+    mode,
     leftSidebarVisible,
     rightSidebarVisible,
     terminalVisible,
@@ -56,18 +59,20 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className={styles.app}>
+    <div className={`${styles.app} ${mode === 'galaxymind' ? styles.galaxyMode : styles.deepzeroMode}`}>
       <TopBar />
       
       <div className={styles.mainContainer}>
         {leftSidebarVisible && <LeftSidebar />}
         <div className={styles.editorAndTerminal}>
-          <MainEditorArea />
-          <TerminalPanel 
-            isVisible={terminalVisible} 
-            height={terminalHeight}
-            onHeightChange={setTerminalHeight}
-          />
+          {mode === 'deepzero' ? <DeepZero /> : <GalaxyMind />}
+          {mode === 'deepzero' && (
+            <TerminalPanel 
+              isVisible={terminalVisible} 
+              height={terminalHeight}
+              onHeightChange={setTerminalHeight}
+            />
+          )}
         </div>
         {rightSidebarVisible && <RightSidebar />}
       </div>
