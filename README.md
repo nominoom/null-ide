@@ -17,7 +17,9 @@ A powerful, privacy-focused Electron-based IDE designed for hackers, penetration
 - Multi-tab editing with file management
 - Dark theme optimized for long coding sessions
 
-###  **Hacking Tools (100+ Tools)**
+## The Hacking & Programming Tool's are not yet completely ready.
+
+###  **Hacking Tools**
 Advanced penetration testing and security research utilities:
 
 #### **Reconnaissance**
@@ -50,7 +52,7 @@ Advanced penetration testing and security research utilities:
 - SSTI (Server-Side Template Injection) Payloads
 - XXE (XML External Entity) Payloads
 
-###  **Programmer Utilities (1000+ Tools)**
+###  **Programmer Utilities**
 
 #### **Digital Forensics**
 - File Hash Calculator (MD5, SHA-1, SHA-256)
