@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Terminal } from 'xterm';
+import { Terminal as XTerm } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
-import { TerminalIcon, TrashIcon } from '../icons/Icons';
 import 'xterm/css/xterm.css';
 import styles from './TerminalPanel.module.css';
 
@@ -31,7 +30,6 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
         foreground: '#e0e0e0',
         cursor: '#00ffaa',
         cursorAccent: '#0a0a0a',
-        selection: 'rgba(0, 255, 170, 0.3)',
         black: '#1a1a1a',
         red: '#ff5f87',
         green: '#00ffaa',
@@ -68,7 +66,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
     });
 
     // Handle terminal input
-    xterm.onData((data) => {
+    xterm.onData((data: string) => {
       window.electronAPI.terminal.write(terminalId, data);
     });
 
@@ -92,7 +90,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
       window.electronAPI.terminal.kill(terminalId);
       xterm.dispose();
     };
-  }, [terminalRef.current]);
+  }, [terminal, terminalId]);
 
   useEffect(() => {
     if (terminal && isVisible) {

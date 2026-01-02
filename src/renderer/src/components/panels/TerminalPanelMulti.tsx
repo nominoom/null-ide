@@ -36,7 +36,6 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
         background: '#0a0a0a',
         foreground: '#e0e0e0',
         cursor: '#00ffaa',
-        selection: 'rgba(0, 255, 170, 0.3)',
         black: '#1a1a1a',
         red: '#ff5f87',
         green: '#00ffaa',
@@ -119,6 +118,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
     if (terminals.length === 0) {
       createTerminal();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -131,7 +131,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
         });
       }, 100);
     }
-  }, [isVisible, height, activeTerminalId]);
+  }, [isVisible, height, activeTerminalId, terminals]);
 
   useEffect(() => {
     return () => {
@@ -140,6 +140,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
         t.terminal.dispose();
       });
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -166,7 +167,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResizing]);
+  }, [isResizing, onHeightChange]);
 
   if (!isVisible) return null;
 
