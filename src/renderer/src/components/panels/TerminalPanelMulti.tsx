@@ -217,10 +217,14 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
     };
   }, [isResizing, onHeightChange]);
 
-  if (!isVisible) return null;
-
   return (
-    <div className={styles.terminalPanel} style={{ height: `${height}px` }}>
+    <div 
+      className={styles.terminalPanel} 
+      style={{ 
+        height: isVisible ? `${height}px` : '0px',
+        display: isVisible ? 'flex' : 'none',
+      }}
+    >
       <div className={styles.resizeHandle} onMouseDown={handleMouseDown} />
       
       <div className={styles.terminalHeader}>
