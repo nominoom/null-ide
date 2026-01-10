@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useStore } from './store/store';
+import { initializeTheme } from './utils/themeManager';
 import TopBar from './components/layout/TopBar';
 import LeftSidebar from './components/layout/LeftSidebar';
 import RightSidebar from './components/layout/RightSidebar';
@@ -9,6 +10,7 @@ import SettingsModal from './components/modals/SettingsModal';
 import AboutModal from './components/modals/AboutModal';
 import DeepZero from './components/modes/DeepZero';
 import GalaxyMind from './components/modes/GalaxyMind';
+import './styles/themes.css';
 import './styles/animations.css';
 import styles from './App.module.css';
 
@@ -25,6 +27,11 @@ const App: React.FC = () => {
     closeSettings,
     closeAbout,
   } = useStore();
+
+  // Initialize theme system
+  useEffect(() => {
+    initializeTheme();
+  }, []);
 
   // Keyboard shortcuts
   useEffect(() => {

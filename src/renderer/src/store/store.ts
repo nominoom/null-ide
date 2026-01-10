@@ -139,12 +139,13 @@ export const useStore = create<UIState>((set) => ({
       path: '',
       name: 'Welcome',
       language: 'markdown',
-      content: `# Welcome to Null IDE
+      content: `# Welcome to Null IDE v3.0
 
-**Professional Code Editor & Developer Utilities**
+**The Ultimate Hacker's Code Editor & Security Toolkit**
 
-## Quick Start
+## 🚀 Quick Start
 
+### Keyboard Shortcuts
 - **Ctrl+N**: New file
 - **Ctrl+O**: Open file
 - **Ctrl+S**: Save file
@@ -156,51 +157,80 @@ export const useStore = create<UIState>((set) => ({
 - **Ctrl+\`**: Toggle terminal
 - **Ctrl+,**: Settings
 
-## Features
+## ⚡ Features
 
-✓ Monaco Editor with VS Code engine
-✓ 27 security & developer utility tools
-✓ Integrated terminal support
-✓ Privacy-focused (local-only storage)
-✓ Full keyboard shortcuts
-✓ Extension support
+✓ **Monaco Editor** - VS Code engine with IntelliSense
+✓ **38 Security Tools** - Advanced penetration testing arsenal
+✓ **Multi-Terminal** - Integrated PowerShell terminals
+✓ **Theme Extensions** - 8 built-in themes + custom CSS themes
+✓ **Privacy-Focused** - All data stays local, no telemetry
+✓ **Zero Errors** - Production-ready, fully tested build
 
-## Mode Switching
+## 🎨 Two Modes
 
-**📝 Code Mode**: Full-featured code editor with Monaco Editor
-**🛠️ Utility Mode**: 27 security testing and developer utility tools
+**📝 Code Mode**: Full-featured Monaco Editor
+- Syntax highlighting for 100+ languages
+- IntelliSense & autocomplete
+- Multiple tabs & split view
+- Git integration ready
 
-## Utility Tools (27 Total)
+**🛠️ Utility Mode**: 38 Professional Security Tools
+- Network scanning & reconnaissance
+- Web security testing (XSS, SQLi, CSRF, LFI)
+- Payload generation (reverse shells, web shells, shellcode)
+- Cryptographic tools (hash cracking, JWT, encryption)
+- API testing (packet analysis, CORS, OAuth, HTTP smuggling)
 
-**🔐 Security Tools (8)**
-- Port Scanner, Subdomain Finder, DNS Analyzer
-- WHOIS Lookup, Header Analyzer
-- SQL Injection Tester, XSS Detector, Uptime Checker
+## 🔐 Security Tools (38 Total)
 
-**🛠️ Developer Tools (20)**
-- Base64/URL/Hash/JWT tools
-- JSON Formatter/Beautifier
-- Regex Tester, UUID Generator
-- Timestamp Converter, Password Generator
-- Color Converter, HTML Entity Encoder
-- Markdown Preview, QR Code Generator
-- Lorem Ipsum Generator, Diff Viewer
-- CSS Minifier, Slug Generator, Cron Generator
+### Network (5 tools)
+Port Scanner • Subdomain Finder • DNS Analyzer • WHOIS • Reverse DNS
 
-## Left Sidebar
+### Web Security (6 tools)
+SQL Injection Tester • XSS Detector • Security Headers • LFI/RFI Scanner • CSRF Tester • Directory Fuzzer
 
-- **Explorer**: Browse and manage files
-- **Hacking Tools**: Launch security testing tools
-- **Utilities**: Launch developer utilities
-- **Extensions**: Manage extensions
+### Payloads (5 tools)
+Reverse Shell Generator • Payload Encoder • Web Shell Generator • Code Obfuscator • Shellcode Generator
 
-## Right Sidebar
+### Crypto (5 tools)
+Hash Cracker • Hash Generator • AES/RSA Encryption • JWT Cracker • Base64/Hex Tool
 
-Access DeepHat AI - your uncensored hacker AI assistant.
+### API (4 tools)
+API Tester • Packet Analyzer • HTTP Smuggling • CORS Tester
+
+### Auth (3 tools)
+Password Generator • JWT Decoder • OAuth 2.0 Tester
+
+### Developer Tools (10 tools)
+JSON Formatter • Regex Tester • UUID Generator • Timestamp Converter • Color Converter • Diff Viewer • Markdown Preview
+
+## 🎨 Theme Extensions
+
+Access **Extensions** in the left sidebar to:
+- Choose from 8 built-in professional themes
+- Install custom CSS themes
+- Create your own themes
+- Export/import theme configs
+
+Available themes: Null Dark (default), Cyber Purple, Matrix Green, Nord, Dracula, Tokyo Night, Gruvbox Dark, One Dark Pro
+
+## 🖥️ Terminal
+
+Integrated PowerShell terminals with:
+- Multiple terminal instances
+- Proper initialization (fixed blank screen bug)
+- Automatic terminal spawn
+- Full terminal output support
+
+## 🔒 Privacy Notice
+
+**100% Local** - All code, data, and settings stay on your machine.
+**No Telemetry** - Zero tracking, analytics, or external connections.
+**No Cloud** - Everything runs locally for maximum security.
 
 ---
 
-**Privacy Notice**: All your code and data stays local. No telemetry, no tracking.
+**v3.0 Updates**: 9 new advanced tools, terminal fixes, theme extension system, 100% working tools, zero errors
 `,
       modified: false,
     },

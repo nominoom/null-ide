@@ -71,13 +71,22 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
     setTerminals(prev => [...prev, newTerminal]);
     setActiveTerminalId(id);
 
-    // Spawn terminal process after state update
-    setTimeout(() => {
+    // Spawn terminal process after state update with proper retry logic
+    const initializeTerminal = () => {
       const container = document.getElementById(`terminal-${id}`);
-      if (container) {
+      if (container && container.offsetParent !== null) { // Check if visible in DOM
         xterm.open(container);
-        fitAddon.fit();
+        
+        // Fit with retry
+        try {
+          fitAddon.fit();
+        } catch (e) {
+          setTimeout(() => {
+            try { fitAddon.fit(); } catch { /* ignore */ }
+          }, 200);
+        }
 
+        // Spawn PowerShell process
         window.electronAPI.terminal.spawn(id, 'powershell.exe').then((res) => {
           if (res.success) {
             xterm.writeln('\x1b[1;32m✓\x1b[0m PowerShell Ready');
@@ -89,6 +98,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
           xterm.writeln(`\x1b[1;31m✗\x1b[0m Error: ${err.message}`);
         });
 
+        // Setup data handlers
         xterm.onData((data) => {
           window.electronAPI.terminal.write(id, data);
         });
@@ -104,8 +114,13 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
             xterm.writeln(`\n\x1b[33mProcess exited with code ${code}\x1b[0m`);
           }
         });
+      } else {
+        // Container not ready, retry
+        setTimeout(initializeTerminal, 150);
       }
-    }, 100);
+    };
+    
+    setTimeout(initializeTerminal, 100);
 
     return newTerminal;
   };
@@ -125,6 +140,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
   };
 
   useEffect(() => {
+    // Always create initial terminal, regardless of visibility
     if (terminals.length === 0) {
       createTerminal();
     }
@@ -132,14 +148,22 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
   }, []);
 
   useEffect(() => {
-    if (isVisible && terminals.length > 0) {
-      setTimeout(() => {
+    // Fit terminals when visible or when height/active terminal changes
+    if (terminals.length > 0) {
+      const fitTimer = setTimeout(() => {
         terminals.forEach(t => {
           if (t.id === activeTerminalId) {
-            t.fitAddon.fit();
+            try {
+              t.fitAddon.fit();
+            } catch (e) {
+              // Terminal may not be fully initialized yet
+              console.debug('Terminal fit skipped:', e);
+            }
           }
         });
-      }, 100);
+      }, isVisible ? 150 : 300); // Longer delay if not visible
+      
+      return () => clearTimeout(fitTimer);
     }
   }, [isVisible, height, activeTerminalId, terminals]);
 

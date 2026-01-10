@@ -29,10 +29,17 @@ import HashCracker from '../galaxymind/HashCracker';
 import HashGenerator from '../galaxymind/HashGenerator';
 import Base64Tool from '../galaxymind/Base64Tool';
 import JWTCracker from '../galaxymind/JWTCracker';
+import EncryptionTool from '../galaxymind/EncryptionTool';
+
+// API Tools
+import PacketAnalyzer from '../galaxymind/PacketAnalyzer';
+import HTTPSmuggling from '../galaxymind/HTTPSmuggling';
+import CORSTester from '../galaxymind/CORSTester';
 
 // Auth Tools
 import JWTDecoder from '../galaxymind/JWTDecoder';
 import PasswordGenerator from '../galaxymind/PasswordGenerator';
+import OAuthTester from '../galaxymind/OAuthTester';
 
 // Developer Tools
 import JSONFormatter from '../galaxymind/JSONFormatter';
@@ -100,15 +107,15 @@ const GalaxyMind: React.FC = () => {
       case 'jwt-cracker':
         return <JWTCracker />;
       case 'encryption-tool':
-        return <Base64Tool />; // Reuse Base64Tool for now
+        return <EncryptionTool />;
 
       // API Tools (additional)
       case 'packet-analyzer':
-        return <APITester />; // Reuse API Tester
+        return <PacketAnalyzer />;
       case 'request-smuggling':
-        return <APITester />; // Reuse API Tester
+        return <HTTPSmuggling />;
       case 'cors-tester':
-        return <APITester />; // Reuse API Tester
+        return <CORSTester />;
 
       // Auth Tools
       case 'jwt-decoder':
@@ -116,7 +123,7 @@ const GalaxyMind: React.FC = () => {
       case 'password-generator':
         return <PasswordGenerator />;
       case 'oauth-tester':
-        return <APITester />; // Reuse API Tester
+        return <OAuthTester />;
 
       // Developer Tools
       case 'json-formatter':
