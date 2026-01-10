@@ -6,13 +6,18 @@ let rpc: Client | null = null;
 let connected = false;
 
 export function initDiscordRPC() {
-  if (rpc) return;
+  if (rpc) {
+    console.log('Discord RPC already initialized');
+    return;
+  }
 
   try {
+    console.log('Initializing Discord RPC with Client ID:', clientId);
     rpc = new Client({ transport: 'ipc' });
 
     rpc.on('ready', () => {
-      console.log('✅ Discord RPC connected successfully');
+      console.log('✅ Discord RPC connected successfully!');
+      console.log('Make sure you uploaded assets (null-ide, code, idle) to Discord Developer Portal');
       connected = true;
       // Set initial activity
       setTimeout(() => {

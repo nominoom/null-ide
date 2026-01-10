@@ -50,12 +50,13 @@ const RightSidebar: React.FC = () => {
   useEffect(() => {
     // Position the DeepHat browser view when component mounts or resizes
     const updatePosition = () => {
-      if (containerRef.current) {
+      if (containerRef.current && sidebarRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
+        // Add 10px padding from left edge to avoid covering resize handle
         window.electronAPI.deephat.position({
-          x: Math.floor(rect.left),
+          x: Math.floor(rect.left) + 10,
           y: Math.floor(rect.top),
-          width: Math.floor(rect.width),
+          width: Math.floor(rect.width) - 10,
           height: Math.floor(rect.height),
         });
       }
