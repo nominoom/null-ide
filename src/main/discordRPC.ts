@@ -1,6 +1,6 @@
 import { Client } from 'discord-rpc';
 
-const clientId = '1331234567890123456'; // You'll need to create a Discord app and get this ID
+const clientId = '1459478156120428606'; // You'll need to create a Discord app and get this ID
 
 let rpc: Client | null = null;
 let connected = false;
@@ -34,8 +34,8 @@ export function updateActivity(state: string, fileName: string | null) {
     details: fileName ? `Editing ${fileName}` : 'Idling',
     state: fileName ? 'Working on a file' : 'No files open',
     startTimestamp: Date.now(),
-    largeImageKey: 'null-ide-logo', // Upload logo to Discord app assets
-    largeImageText: 'Null IDE v3.0',
+    largeImageKey: 'clearnull', // Upload logo to Discord app assets
+    largeImageText: 'Null IDE',
     smallImageKey: fileName ? 'editing' : 'idle',
     smallImageText: fileName ? 'Coding' : 'Idle',
     instance: false,

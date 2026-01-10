@@ -159,30 +159,24 @@
     "linux": {
       "icon": "build/icon.png",
       "target": [
-        {
-          "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "deb",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "rpm",
-          "arch": [
-            "x64"
-          ]
-        }
+        "AppImage",
+        "deb",
+        "rpm"
       ],
       "category": "Development",
       "maintainer": "NullSec <nullsec@example.com>",
       "vendor": "NullSec",
       "synopsis": "The Ultimate Hacker's Code Editor & Security Toolkit",
-      "description": "Professional IDE combining Monaco code editor with 38 security testing and developer tools. Privacy-focused with local-only data storage."
+      "description": "Professional IDE combining Monaco code editor with 38 security testing and developer tools. Privacy-focused with local-only data storage.",
+      "desktop": {
+        "Name": "Null IDE",
+        "Comment": "The Ultimate Hacker's Code Editor & Security Toolkit",
+        "Icon": "null-ide",
+        "Type": "Application",
+        "Categories": "Development;IDE;TextEditor;Security;",
+        "Terminal": false,
+        "StartupWMClass": "Null IDE"
+      }
     }
   }
 }

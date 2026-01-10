@@ -35,47 +35,48 @@ Null IDE is an advanced, cross-platform development environment specifically des
 
 ### Linux
 
-**Requirements**: 
-- FUSE library (for AppImage)
-- Debian/Ubuntu: `sudo apt install libfuse2`
-- Fedora: `sudo dnf install fuse`
-
 **AppImage (Universal - Recommended)**
+
+Download `Null-IDE-3.1.0.AppImage` from [Releases](https://github.com/4fqr/null-ide/releases)
+
 ```bash
-# Download from Releases
+# Make executable and run
 chmod +x Null-IDE-3.1.0.AppImage
-
-# Run directly
 ./Null-IDE-3.1.0.AppImage
-
-# Optional: Integrate with system
-./Null-IDE-3.1.0.AppImage --appimage-extract
-sudo mv squashfs-root /opt/null-ide
-sudo ln -s /opt/null-ide/AppRun /usr/local/bin/null-ide
 ```
 
+That's it! No installation required. The AppImage includes everything needed to run.
+
 **Debian/Ubuntu (.deb)**
+
 ```bash
-# Download from Releases
 sudo dpkg -i null-ide_3.1.0_amd64.deb
-
-# Install dependencies if needed
-sudo apt-get install -f
-
-# Run
 null-ide
 ```
 
 **Fedora/RHEL/CentOS (.rpm)**
-```bash
-# Download from Releases
-sudo rpm -i null-ide-3.1.0.x86_64.rpm
 
-# Run
+```bash
+sudo rpm -i null-ide-3.1.0.x86_64.rpm
 null-ide
 ```
 
-**Note**: Linux builds must be created on a Linux machine. Clone the repo and run:
+**Troubleshooting**:
+- If AppImage shows "FUSE not found": `sudo apt install libfuse2` (Ubuntu) or `sudo dnf install fuse` (Fedora)
+
+**Building Linux Packages**:
+
+Linux installers must be built on Linux. On a Linux machine:
+
+```bash
+git clone https://github.com/4fqr/null-ide.git
+cd null-ide
+chmod +x build-linux.sh
+./build-linux.sh
+```
+
+Or manually:
+
 ```bash
 npm install
 npm run build
