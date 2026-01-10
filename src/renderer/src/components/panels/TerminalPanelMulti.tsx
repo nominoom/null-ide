@@ -201,7 +201,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
 
     const handleMouseMove = (e: MouseEvent) => {
       const newHeight = window.innerHeight - e.clientY;
-      onHeightChange(Math.max(100, Math.min(600, newHeight)));
+      onHeightChange(Math.max(50, Math.min(800, newHeight)));
     };
 
     const handleMouseUp = () => {
