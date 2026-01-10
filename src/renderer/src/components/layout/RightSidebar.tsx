@@ -52,11 +52,11 @@ const RightSidebar: React.FC = () => {
     const updatePosition = () => {
       if (containerRef.current && sidebarRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
-        // Add 10px padding from left edge to avoid covering resize handle
+        // Add 30px padding from left edge to avoid covering resize handle
         window.electronAPI.deephat.position({
-          x: Math.floor(rect.left) + 10,
+          x: Math.floor(rect.left) + 30,
           y: Math.floor(rect.top),
-          width: Math.floor(rect.width) - 10,
+          width: Math.floor(rect.width) - 30,
           height: Math.floor(rect.height),
         });
       }

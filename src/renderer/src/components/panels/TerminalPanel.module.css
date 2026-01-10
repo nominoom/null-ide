@@ -8,18 +8,32 @@
 
 .resizeHandle {
   position: absolute;
-  top: 0;
+  top: -7px;
   left: 0;
   right: 0;
-  height: 6px;
+  height: 15px;
   cursor: ns-resize;
-  background: transparent;
+  background: rgba(0, 255, 170, 0.08);
+  border-top: 2px solid rgba(0, 255, 170, 0.3);
+  transition: all var(--transition-fast);
   z-index: 1000;
-  transition: background var(--transition-fast);
 }
 
 .resizeHandle:hover {
-  background: var(--color-accent);
+  background: rgba(0, 255, 170, 0.2);
+  border-top: 3px solid var(--color-accent);
+  box-shadow: 0 -2px 10px rgba(0, 255, 170, 0.4);
+}
+
+.resizeHandle::before {
+  content: '⋮⋮⋮';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  color: rgba(0, 255, 170, 0.5);
+  font-size: 14px;
+  letter-spacing: 2px;
 }
 
 .terminalHeader {
