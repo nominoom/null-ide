@@ -3,12 +3,11 @@ import { useStore } from '../../store/store';
 import FileExplorer from '../panels/FileExplorer';
 import HackingTools from '../panels/HackingTools';
 import ProgrammerUtilities from '../panels/ProgrammerUtilities';
-import ExtensionsPanel from '../panels/ExtensionsPanel';
 import { FolderIcon, LockIcon, ToolsIcon, ExtensionsIcon, ChevronLeftIcon } from '../icons/Icons';
 import styles from './LeftSidebar.module.css';
 
 const LeftSidebar: React.FC = () => {
-  const { activeLeftPanel, setActiveLeftPanel, leftSidebarWidth, setLeftSidebarWidth } = useStore();
+  const { activeLeftPanel, setActiveLeftPanel, leftSidebarWidth, setLeftSidebarWidth, openThemes } = useStore();
   const [collapsed, setCollapsed] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -17,8 +16,16 @@ const LeftSidebar: React.FC = () => {
     { id: 'explorer', name: 'Explorer', icon: <FolderIcon size={18} />, component: FileExplorer },
     { id: 'hacking', name: 'Hacking Tools', icon: <LockIcon size={18} />, component: HackingTools },
     { id: 'utilities', name: 'Utilities', icon: <ToolsIcon size={18} />, component: ProgrammerUtilities },
-    { id: 'extensions', name: 'Extensions', icon: <ExtensionsIcon size={18} />, component: ExtensionsPanel },
   ];
+
+  // Handle extensions click separately (opens modal)
+  const handlePanelClick = (panelId: string) => {
+    if (panelId === 'extensions') {
+      openThemes();
+    } else {
+      setActiveLeftPanel(panelId);
+    }
+  };
 
   const ActiveComponent = panels.find((p) => p.id === activeLeftPanel)?.component || FileExplorer;
 
@@ -58,7 +65,7 @@ const LeftSidebar: React.FC = () => {
             key={panel.id}
             className={`${styles.iconBtn} ${panel.id === activeLeftPanel ? styles.active : ''}`}
             onClick={() => {
-              setActiveLeftPanel(panel.id);
+              handlePanelClick(panel.id);
               setCollapsed(false);
             }}
             title={panel.name}
@@ -66,6 +73,15 @@ const LeftSidebar: React.FC = () => {
             {panel.icon}
           </button>
         ))}
+        <button
+          className={styles.iconBtn}
+          onClick={() => {
+            openThemes();
+          }}
+          title="Extensions"
+        >
+          <ExtensionsIcon size={18} />
+        </button>
       </div>
     );
   }
@@ -78,13 +94,21 @@ const LeftSidebar: React.FC = () => {
             <button
               key={panel.id}
               className={`${styles.tab} ${panel.id === activeLeftPanel ? styles.activeTab : ''}`}
-              onClick={() => setActiveLeftPanel(panel.id)}
+              onClick={() => handlePanelClick(panel.id)}
               title={panel.name}
             >
               <span className={styles.tabIcon}>{panel.icon}</span>
               <span className={styles.tabName}>{panel.name}</span>
             </button>
           ))}
+          <button
+            className={styles.tab}
+            onClick={() => openThemes()}
+            title="Extensions"
+          >
+            <span className={styles.tabIcon}><ExtensionsIcon size={18} /></span>
+            <span className={styles.tabName}>Extensions</span>
+          </button>
         </div>
         <button className={styles.collapseBtn} onClick={() => setCollapsed(true)} title="Collapse">
           <ChevronLeftIcon size={16} />

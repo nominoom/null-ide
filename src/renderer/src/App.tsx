@@ -8,6 +8,7 @@ import StatusBar from './components/layout/StatusBar';
 import TerminalPanel from './components/panels/TerminalPanelMulti';
 import SettingsModal from './components/modals/SettingsModal';
 import AboutModal from './components/modals/AboutModal';
+import ThemeModal from './components/modals/ThemeModal';
 import DeepZero from './components/modes/DeepZero';
 import GalaxyMind from './components/modes/GalaxyMind';
 import './styles/themes.css';
@@ -158,6 +159,7 @@ const App: React.FC = () => {
       
       {settingsOpen && <SettingsModal onClose={closeSettings} />}
       {aboutOpen && <AboutModal onClose={closeAbout} />}
+      <ThemeModal />
     </div>
   );
 };

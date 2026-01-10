@@ -74,6 +74,7 @@ interface UIState {
   // Modals
   settingsOpen: boolean;
   aboutOpen: boolean;
+  themesOpen: boolean;
   
   // Theme
   theme: 'dark';
@@ -110,6 +111,8 @@ interface UIState {
   closeSettings: () => void;
   openAbout: () => void;
   closeAbout: () => void;
+  openThemes: () => void;
+  closeThemes: () => void;
 }
 
 export const useStore = create<UIState>((set) => ({
@@ -238,6 +241,7 @@ Integrated PowerShell terminals with:
   activeTabId: 'welcome',
   settingsOpen: false,
   aboutOpen: false,
+  themesOpen: false,
   theme: 'dark',
   
   // Actions
@@ -313,4 +317,6 @@ Integrated PowerShell terminals with:
   closeSettings: () => set({ settingsOpen: false }),
   openAbout: () => set({ aboutOpen: true }),
   closeAbout: () => set({ aboutOpen: false }),
+  openThemes: () => set({ themesOpen: true }),
+  closeThemes: () => set({ themesOpen: false }),
 }));

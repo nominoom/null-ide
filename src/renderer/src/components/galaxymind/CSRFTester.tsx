@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useStore } from '../../store/store';
 import styles from './Tool.module.css';
 
 export default function CSRFTester() {
+  const { setActiveGalaxyTool } = useStore();
   const [targetUrl, setTargetUrl] = useState('');
   const [method, setMethod] = useState<'GET' | 'POST'>('POST');
   const [parameters, setParameters] = useState('');
@@ -94,6 +96,14 @@ ${params.map(p => `        <input type="hidden" name="${p.key}" value="${p.value
 
   return (
     <div className={styles.tool}>
+            <button className={styles.backButton} onClick={() => setActiveGalaxyTool(null)}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to Tools
+      </button>
+      
+
       <div className={styles.toolHeader}>
         <div className={styles.toolTitle}>
           <span className={styles.toolIcon}>🔄</span>

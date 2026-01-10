@@ -12,6 +12,13 @@ export default function ThemeExtensions() {
   const [themeDesc, setThemeDesc] = useState('');
   const [themeAuthor, setThemeAuthor] = useState('');
 
+  // Load template when install panel opens
+  useEffect(() => {
+    if (showInstall && !themeCSS) {
+      loadThemeTemplate();
+    }
+  }, [showInstall]);
+
   useEffect(() => {
     loadThemes();
   }, []);

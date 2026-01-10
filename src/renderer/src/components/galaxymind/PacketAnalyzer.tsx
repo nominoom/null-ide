@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useStore } from '../../store/store';
 import styles from './Tool.module.css';
 
 interface Packet {
@@ -12,6 +13,7 @@ interface Packet {
 }
 
 export default function PacketAnalyzer() {
+  const { setActiveGalaxyTool } = useStore();
   const [rawData, setRawData] = useState('');
   const [packets, setPackets] = useState<Packet[]>([]);
   const [selectedPacket, setSelectedPacket] = useState<Packet | null>(null);
@@ -98,6 +100,14 @@ export default function PacketAnalyzer() {
 
   return (
     <div className={styles.tool}>
+            <button className={styles.backButton} onClick={() => setActiveGalaxyTool(null)}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to Tools
+      </button>
+      
+
       <div className={styles.toolHeader}>
         <div className={styles.toolTitle}>
           <span className={styles.toolIcon}>📡</span>

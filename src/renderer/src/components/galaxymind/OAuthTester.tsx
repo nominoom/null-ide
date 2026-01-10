@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useStore } from '../../store/store';
 import styles from './Tool.module.css';
 
 type GrantType = 'authorization_code' | 'implicit' | 'password' | 'client_credentials';
 
 export default function OAuthTester() {
+  const { setActiveGalaxyTool } = useStore();
   const [authUrl, setAuthUrl] = useState('');
   const [tokenUrl, setTokenUrl] = useState('');
   const [clientId, setClientId] = useState('');
@@ -191,6 +193,14 @@ export default function OAuthTester() {
 
   return (
     <div className={styles.tool}>
+            <button className={styles.backButton} onClick={() => setActiveGalaxyTool(null)}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to Tools
+      </button>
+      
+
       <div className={styles.toolHeader}>
         <div className={styles.toolTitle}>
           <span className={styles.toolIcon}>🔐</span>

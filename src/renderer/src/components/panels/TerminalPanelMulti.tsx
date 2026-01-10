@@ -115,12 +115,14 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
           }
         });
       } else {
-        // Container not ready, retry
-        setTimeout(initializeTerminal, 150);
+        // Container not ready, retry with longer delay
+        console.log(`Terminal ${id} container not ready, retrying...`);
+        setTimeout(initializeTerminal, 200);
       }
     };
     
-    setTimeout(initializeTerminal, 100);
+    // Start initialization with longer initial delay
+    setTimeout(initializeTerminal, 500);
 
     return newTerminal;
   };
