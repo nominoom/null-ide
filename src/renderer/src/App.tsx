@@ -131,13 +131,13 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className={`${styles.app} ${mode === 'galaxymind' ? styles.galaxyMode : styles.deepzeroMode}`}>
+    <div className={`${styles.app} ${mode === 'utility' ? styles.utilityMode : styles.codeMode}`}>
       <TopBar />
       
       <div className={styles.mainContainer}>
         {leftSidebarVisible && <LeftSidebar />}
         <div className={styles.editorAndTerminal}>
-          {mode === 'deepzero' ? <DeepZero /> : <GalaxyMind />}
+          {mode === 'code' ? <DeepZero /> : <GalaxyMind />}
           <TerminalPanel 
             isVisible={terminalVisible} 
             height={terminalHeight}

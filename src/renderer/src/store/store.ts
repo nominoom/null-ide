@@ -39,8 +39,8 @@ export interface ToolResult {
 
 interface UIState {
   // Mode switching
-  mode: 'deepzero' | 'galaxymind';
-  setMode: (mode: 'deepzero' | 'galaxymind') => void;
+  mode: 'code' | 'utility';
+  setMode: (mode: 'code' | 'utility') => void;
   
   // Sidebar visibility
   leftSidebarVisible: boolean;
@@ -114,7 +114,7 @@ interface UIState {
 
 export const useStore = create<UIState>((set) => ({
   // Initial state
-  mode: 'deepzero',
+  mode: 'code',
   leftSidebarVisible: true,
   rightSidebarVisible: true,
   terminalVisible: false,
@@ -141,7 +141,7 @@ export const useStore = create<UIState>((set) => ({
       language: 'markdown',
       content: `# Welcome to Null IDE
 
-**NullSec - The Ultimate Hacker & Master Programmer IDE**
+**Professional Code Editor & Developer Utilities**
 
 ## Quick Start
 
@@ -159,17 +159,18 @@ export const useStore = create<UIState>((set) => ({
 ## Features
 
 ✓ Monaco Editor with VS Code engine
-✓ 28 GalaxyMind security & developer tools
-✓ Embedded DeepHat AI assistant
+✓ 27 security & developer utility tools
+✓ Integrated terminal support
 ✓ Privacy-focused (local-only storage)
-✓ Full keyboard shortcuts support
+✓ Full keyboard shortcuts
+✓ Extension support
 
 ## Mode Switching
 
-**⚡ DeepZero Mode**: Full-featured code editor with Monaco Editor
-**🌌 GalaxyMind Mode**: 28 security testing and developer utility tools
+**📝 Code Mode**: Full-featured code editor with Monaco Editor
+**🛠️ Utility Mode**: 27 security testing and developer utility tools
 
-## GalaxyMind Tools (28 Total)
+## Utility Tools (27 Total)
 
 **🔐 Security Tools (8)**
 - Port Scanner, Subdomain Finder, DNS Analyzer

@@ -5,14 +5,14 @@
   flex-direction: column;
   background: var(--color-bg-primary);
   overflow: hidden;
-  transition: background 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background var(--transition-slow);
 }
 
-.app.galaxyMode {
-  background: linear-gradient(135deg, #0a0a0f 0%, #1a0f2e 50%, #0a0a0f 100%);
+.app.utilityMode {
+  background: linear-gradient(135deg, #050508 0%, #0a0a12 50%, #050508 100%);
 }
 
-.app.deepzeroMode {
+.app.codeMode {
   background: var(--color-bg-primary);
 }
 

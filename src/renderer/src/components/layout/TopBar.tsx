@@ -81,24 +81,21 @@ const TopBar: React.FC = () => {
         <div className={styles.left}>
           <div className={styles.branding}>
             <span className={styles.title}>Null IDE</span>
-            <span className={styles.subtitle}>NullSec</span>
           </div>
           
-          {/* Mode Toggle - Moved to left side */}
+          {/* Mode Toggle - Minimal Design */}
           <div className={styles.modeToggle}>
             <button
-              className={`${styles.modeButton} ${mode === 'deepzero' ? styles.active : ''}`}
-              onClick={() => setMode('deepzero')}
+              className={`${styles.modeButton} ${mode === 'code' ? styles.active : ''}`}
+              onClick={() => setMode('code')}
             >
-              <span className={styles.modeIcon}>⚡</span>
-              DeepZero
+              Code
             </button>
             <button
-              className={`${styles.modeButton} ${mode === 'galaxymind' ? styles.active : ''}`}
-              onClick={() => setMode('galaxymind')}
+              className={`${styles.modeButton} ${mode === 'utility' ? styles.active : ''}`}
+              onClick={() => setMode('utility')}
             >
-              <span className={styles.modeIcon}>🌌</span>
-              GalaxyMind
+              Utility
             </button>
           </div>
         </div>
