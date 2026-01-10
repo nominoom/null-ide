@@ -1,7 +1,7 @@
 {
   "name": "null-ide",
-  "version": "2.0.0",
-  "description": "The Ultimate Hacker & Master Programmer IDE by NullSec - Now with Dual-Mode System",
+  "version": "3.0.0",
+  "description": "The Ultimate Hacker's Code Editor & Security Toolkit - Cross-Platform IDE with 38 Tools",
   "main": "dist/main/main.js",
   "author": "NullSec",
   "license": "MIT",
@@ -155,11 +155,26 @@
       "category": "public.app-category.developer-tools"
     },
     "linux": {
-      "icon": "null-ide.ico",
+      "icon": "build/icon.png",
       "target": [
-        "AppImage",
-        "deb"
-      ]
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        },
+        {
+          "target": "deb",
+          "arch": ["x64"]
+        },
+        {
+          "target": "rpm",
+          "arch": ["x64"]
+        }
+      ],
+      "category": "Development",
+      "maintainer": "NullSec <nullsec@example.com>",
+      "vendor": "NullSec",
+      "synopsis": "The Ultimate Hacker's Code Editor & Security Toolkit",
+      "description": "Professional IDE combining Monaco code editor with 38 security testing and developer tools. Privacy-focused with local-only data storage."
     }
   }
 }

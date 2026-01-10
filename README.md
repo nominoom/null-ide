@@ -1,204 +1,58 @@
 ﻿# Null IDE
 
-![Null IDE Banner](./null-ide.png)
+![Version](https://img.shields.io/badge/version-3.0-brightgreen) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-blue) ![License](https://img.shields.io/badge/license-MIT-orange) ![Electron](https://img.shields.io/badge/electron-28.3.3-9feaf9)
 
-**The Ultimate Dual-Mode IDE for Hackers & Developers**
+**The Ultimate Code Editor & Security Toolkit for Professional Hackers and Developers**
 
-> A privacy-focused Electron IDE with **DeepZero** code editor and **GalaxyMind** security/developer tools suite.
-
-![Version](https://img.shields.io/badge/version-2.0.0-green) ![License](https://img.shields.io/badge/license-MIT-blue) ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
+> A privacy-first, dual-mode development environment combining the power of VS Code's Monaco Editor with 38 professional security testing and developer utility tools.
 
 ---
 
-## 🌟 What is Null IDE?
+## 🎯 Overview
 
-Null IDE is a professional development environment designed for security researchers, penetration testers, and developers. It combines a powerful Monaco-based code editor with 27 built-in security testing and developer utility tools.
+Null IDE is an advanced, cross-platform development environment specifically designed for security researchers, penetration testers, and professional developers. Built with Electron and React, it seamlessly integrates a feature-rich code editor with a comprehensive suite of security and development tools—all while maintaining complete privacy with local-only data storage.
 
-### Two Modes, Infinite Possibilities
+### Key Highlights
 
-- **⚡ DeepZero Mode**: Full-featured code editor powered by VS Code's Monaco engine
-- **🌌 GalaxyMind Mode**: 27 professional security & developer tools at your fingertips
+- **🚀 Dual-Mode Architecture**: Switch between Code Mode (Monaco Editor) and Utility Mode (38 tools) instantly
+- **🔐 38 Security & Developer Tools**: Network scanning, web security testing, payload generation, cryptography, and more
+- **🎨 8 Built-in Themes + Custom Theme Support**: Professionally designed themes with CSS-only extension system
+- **🖥️ Cross-Platform**: Windows and Linux support with native installers
+- **🔒 100% Privacy-Focused**: All data stays local—zero telemetry, no tracking, no cloud connections
+- **⚡ Monaco Editor**: The same powerful engine that powers Visual Studio Code
+- **🤖 AI Assistant**: Integrated uncensored AI for security research and code generation
 
 ---
 
-## 🚀 Quick Start
+## 📥 Installation
 
-### Download & Install
+### Windows
 
-1. Download the latest installer from [Releases](https://github.com/4fqr/null-ide/releases)
-2. Run `Null-IDE-Setup-2.0.0.exe`
+1. Download `Null-IDE-Installer.exe` from [Releases](https://github.com/4fqr/null-ide/releases)
+2. Run the installer and follow the setup wizard
 3. Launch from Start Menu or Desktop shortcut
+
+### Linux
+
+**AppImage (Universal)**
+```bash
+chmod +x Null-IDE-*.AppImage
+./Null-IDE-*.AppImage
+```
+
+**Debian/Ubuntu (.deb)**
+```bash
+sudo dpkg -i null-ide_*.deb
+sudo apt-get install -f  # Install dependencies
+```
+
+**Fedora/RHEL (.rpm)**
+```bash
+sudo rpm -i null-ide-*.rpm
+```
 
 ### Development Setup
 
-\`\`\`bash
-git clone https://github.com/4fqr/null-ide.git
-cd null-ide
-npm install
-npm run dev
-\`\`\`
-
----
-
-## ✨ Features
-
-### 💻 DeepZero Code Editor
-
-- **Monaco Editor** - The same engine that powers VS Code
-- **100+ Languages** - Syntax highlighting for all major programming languages
-- **IntelliSense** - Smart autocomplete and suggestions
-- **Multi-Tab Editing** - Work on multiple files simultaneously
-- **Integrated Terminal** - PowerShell terminal built-in
-- **File Explorer** - Browse and manage project files
-- **Git Integration** - Track changes and commits
-
-### 🌌 GalaxyMind Tools (27 Total)
-
-#### 🔐 Security & Network Tools (8)
-- **API Tester** - Test REST & GraphQL APIs
-- **Port Scanner** - Scan ports with service detection
-- **DNS Analyzer** - Analyze DNS records and lookups
-- **Subdomain Finder** - Discover subdomains
-- **WHOIS Lookup** - Domain registration information
-- **Header Analyzer** - Analyze HTTP security headers
-- **SQL Injection Tester** - Test SQL injection vectors (educational)
-- **XSS Detector** - Detect XSS vulnerabilities (educational)
-- **Uptime Checker** - Monitor website availability
-
-#### 🛠️ Developer Utilities (18)
-- **Base64 Tool** - Encode/decode Base64
-- **URL Tool** - Encode/decode URLs
-- **Hash Generator** - Generate SHA-256, SHA-512, MD5 hashes
-- **JWT Decoder** - Decode and analyze JWT tokens
-- **JSON Formatter** - Format and validate JSON
-- **JSON Beautifier** - Beautify and minify JSON with indent control
-- **Regex Tester** - Test regular expressions with live results
-- **UUID Generator** - Generate UUID v4 identifiers
-- **Timestamp Converter** - Convert between timestamp formats
-- **Password Generator** - Generate cryptographically secure passwords
-- **Color Converter** - Convert HEX/RGB/HSL color formats
-- **HTML Entity Encoder** - Encode/decode HTML entities
-- **Markdown Preview** - Live markdown rendering
-- **Lorem Ipsum Generator** - Generate placeholder text
-- **Diff Viewer** - Compare text differences line-by-line
-- **CSS Minifier** - Minify and beautify CSS
-- **Slug Generator** - Generate URL-friendly slugs
-- **Cron Generator** - Create cron expressions visually
-
-### 🤖 DeepHat AI Assistant
-
-- **Uncensored AI** - No restrictions on security research queries
-- **Code Generation** - Generate code in any language
-- **Security Guidance** - Get help with penetration testing
-- **Privacy First** - Your conversations stay local
-
----
-
-## ⌨️ Keyboard Shortcuts
-
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl+N` | New File |
-| `Ctrl+O` | Open File |
-| `Ctrl+S` | Save File |
-| `Ctrl+W` | Close Tab |
-| `Ctrl+Shift+W` | Close All Tabs |
-| `Ctrl+Tab` | Next Tab |
-| `Ctrl+Shift+Tab` | Previous Tab |
-| `Ctrl+B` | Toggle Left Sidebar |
-| `Ctrl+\`` | Toggle Terminal |
-| `Ctrl+,` | Open Settings |
-
----
-
-## 🔒 Privacy & Security
-
-**Your code never leaves your machine.**
-
-- ✅ All data stored locally
-- ✅ No telemetry or tracking
-- ✅ No analytics
-- ✅ No user data collection
-- ✅ Open source and auditable
-
----
-
-## 📦 Building from Source
-
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-
-### Build Commands
-
-\`\`\`bash
-# Install dependencies
-npm install
-
-# Run in development
-npm run dev
-
-# Build production
-npm run build
-
-# Create installer
-npm run package
-\`\`\`
-
----
-
-## 🛠️ Tech Stack
-
-- **Electron** - Desktop application framework
-- **React** - UI library
-- **TypeScript** - Type-safe development
-- **Monaco Editor** - VS Code's editor engine
-- **Zustand** - State management
-- **Vite** - Fast build tool
-
----
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details
-
----
-
-## 🙏 Credits
-
-**Created by NullSec**
-
-Made with ❤️ for hackers, by hackers.
-
----
-
-## ⚠️ Disclaimer
-
-Null IDE's security testing tools are provided for **educational and authorized testing purposes only**. Users are responsible for ensuring all usage complies with applicable laws and regulations. Unauthorized testing of systems you do not own or have explicit permission to test is illegal.
-
----
-
-## 🐛 Bug Reports & Feature Requests
-
-Found a bug or have a feature idea? [Open an issue](https://github.com/4fqr/null-ide/issues)
-
----
-
-**Star ⭐ this repo if you find it useful!**
-
-- Multi-tab workflow support
-
----
-
-##  Installation
-
-### **Windows Installer**
-1. Download `Null-IDE-Installer.exe` from [Releases](https://github.com/4fqr/null-ide/releases)
-2. Run the installer
-3. Follow installation wizard
-4. Right-click any file/folder  **"Open with Null IDE"**
-
-### **Development Setup**
 ```bash
 # Clone repository
 git clone https://github.com/4fqr/null-ide.git
@@ -207,174 +61,313 @@ cd null-ide
 # Install dependencies
 npm install
 
-# Run development server
+# Run in development mode
 npm run dev
 
 # Build for production
 npm run build
 
-# Create installer
+# Package for Windows
 npm run package
+
+# Package for Linux (run on Linux machine)
+npx electron-builder --linux
 ```
 
 ---
 
-##  Quick Start
+## ✨ Features
 
-### **Opening Files**
-- **Context Menu**: Right-click any file  "Open with Null IDE"
-- **Drag & Drop**: Drag files into the editor
-- **File Menu**: File  Open
+### 💻 Code Mode (Monaco Editor)
 
-### **Using Tools**
-1. Click **Hacking Tools** or **Utilities** in left sidebar
-2. Select a tool from the category
-3. Enter input (or use content from active editor tab)
-4. Click "Run Tool"
-5. Results appear in the output panel or editor
+- **Syntax Highlighting**: Support for 100+ programming languages
+- **IntelliSense**: Intelligent code completion and suggestions
+- **Multi-Tab Editing**: Work on multiple files simultaneously with tab management
+- **File Explorer**: Built-in file browser with folder navigation
+- **Integrated Terminal**: Multi-terminal support with PowerShell (Windows) and Bash (Linux)
+- **Editor Customization**: Font size, word wrap, minimap, and theme settings
+- **Keyboard Shortcuts**: VS Code-compatible shortcuts for familiar workflows
 
-### **Terminal**
-- Access via **Terminal** menu or sidebar
-- Full PowerShell integration
-- Execute commands directly in the IDE
+### 🛠️ Utility Mode (38 Professional Tools)
 
-### **AI Assistant**
-- Click **DeepHat AI** in right sidebar
-- Ask security research questions
-- Get exploit suggestions
-- Receive code assistance
+#### 🔐 Network Tools (5)
+- **API Tester** - REST/GraphQL API testing with request history
+- **Port Scanner** - TCP port scanning with service detection
+- **DNS Analyzer** - DNS record lookup and analysis
+- **Subdomain Finder** - Subdomain enumeration and discovery
+- **WHOIS Lookup** - Domain registration information retrieval
+
+#### 🌐 Web Security Tools (6)
+- **Header Analyzer** - HTTP security header analysis
+- **SQL Injection Tester** - SQL injection vulnerability detection
+- **XSS Detector** - Cross-site scripting vulnerability scanner
+- **LFI/RFI Scanner** - Local/Remote file inclusion testing
+- **CSRF Tester** - Cross-site request forgery testing
+- **Directory Fuzzer** - Web directory and file discovery
+
+#### 💣 Payload Tools (5)
+- **Reverse Shell Generator** - Multi-platform reverse shell payloads
+- **Payload Encoder** - Encode payloads for WAF bypass
+- **Web Shell Generator** - PHP, ASP, JSP web shell creation
+- **Code Obfuscator** - JavaScript and PowerShell obfuscation
+- **Shellcode Generator** - Architecture-specific shellcode generation
+
+#### 🔐 Cryptography Tools (5)
+- **Hash Cracker** - Dictionary-based hash cracking (MD5, SHA1, SHA256)
+- **Hash Generator** - Generate cryptographic hashes
+- **Encryption Tool** - AES-256-GCM/CBC encryption/decryption with Web Crypto API
+- **JWT Cracker** - JWT token security testing
+- **Base64/Hex Tool** - Encode/decode Base64 and Hex
+
+#### 🌍 API Security Tools (4)
+- **Packet Analyzer** - Network packet capture parser (tcpdump/hex)
+- **HTTP Smuggling** - HTTP request smuggling payload generator (CL.TE, TE.CL, TE.TE)
+- **CORS Tester** - Cross-Origin Resource Sharing vulnerability testing
+- **OAuth Tester** - OAuth 2.0 security analysis with PKCE support
+
+#### 🔑 Authentication Tools (3)
+- **JWT Decoder** - JSON Web Token decoder and validator
+- **Password Generator** - Cryptographically secure password generation
+- **OAuth 2.0 Tester** - Complete OAuth flow security testing
+
+#### 🧰 Developer Utilities (10)
+- **JSON Formatter** - Format and validate JSON with syntax highlighting
+- **Regex Tester** - Regular expression testing with live matching
+- **UUID Generator** - Generate UUID v4 identifiers
+- **Timestamp Converter** - Unix timestamp conversion
+- **Color Converter** - HEX/RGB/HSL color format conversion
+- **Markdown Preview** - Live markdown rendering with GitHub styling
+- **Diff Viewer** - Side-by-side text comparison
+- **CSS Minifier** - CSS minification and beautification
+- **Slug Generator** - URL-friendly slug generation
+- **Cron Generator** - Visual cron expression builder
+
+### 🎨 Theme System
+
+- **8 Built-in Professional Themes**:
+  - Null Dark (default) - Ultra-minimal dark theme
+  - Cyber Purple - Cyberpunk-inspired purple theme
+  - Matrix Green - Classic Matrix terminal style
+  - Nord - Arctic north-bluish color palette
+  - Dracula - Popular Dracula theme variant
+  - Tokyo Night - Clean dark blue theme
+  - Gruvbox Dark - Retro warm color scheme
+  - One Dark Pro - Atom-inspired theme
+
+- **Custom Theme Support**:
+  - Install custom CSS themes via Extensions modal
+  - Pre-loaded template for easy theme creation
+  - Export/import themes as JSON
+  - All 17 CSS variables customizable
+
+### 🤖 DeepHat AI Assistant
+
+- **Uncensored AI Model**: No restrictions on security research queries
+- **Code Generation**: Generate code in any programming language
+- **Security Guidance**: Expert advice on penetration testing techniques
+- **Privacy-Focused**: Conversations stored locally only
+- **Context-Aware**: Understands security tools and methodologies
 
 ---
 
-##  Keyboard Shortcuts
+## ⌨️ Keyboard Shortcuts
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+O` | Open File |
-| `Ctrl+S` | Save File |
-| `Ctrl+Shift+P` | Command Palette |
-| `Ctrl+B` | Toggle Left Sidebar |
-| `Ctrl+Shift+B` | Toggle Right Sidebar |
-| `Ctrl+` | Toggle Terminal |
-| `Ctrl+W` | Close Tab |
-| `Ctrl+Tab` | Next Tab |
-| `F11` | Fullscreen |
+| `Ctrl+N` | New file |
+| `Ctrl+O` | Open file |
+| `Ctrl+S` | Save file |
+| `Ctrl+W` | Close tab |
+| `Ctrl+Shift+W` | Close all tabs |
+| `Ctrl+Tab` | Next tab |
+| `Ctrl+Shift+Tab` | Previous tab |
+| `Ctrl+B` | Toggle left sidebar |
+| `Ctrl+` \` ` | Toggle terminal |
+| `Ctrl+,` | Open settings |
+| `Ctrl+Shift+P` | Command palette |
 
 ---
 
-##  Tools Menu (Quick Access)
+## 🏗️ Architecture
 
-Access frequently used tools from the top menu bar:
+### Technology Stack
 
-- **Hash MD5**: Generate MD5 hash of selected text
-- **Hash SHA-256**: Generate SHA-256 hash
-- **Encode Base64**: Encode to Base64
-- **Decode Base64**: Decode from Base64
-- **Encode URL**: URL-encode text
-- **Decode URL**: URL-decode text
-- **Beautify JSON**: Format JSON with proper indentation
-- **Minify JSON**: Compress JSON (remove whitespace)
-- **Decode JWT**: Decode JSON Web Tokens
-- **Generate Reverse Shell**: Create reverse shell payload
+- **Frontend**: React 18.2.0 + TypeScript 5.3.3
+- **Editor**: Monaco Editor 0.45.0 (@monaco-editor/react)
+- **Terminal**: XTerm.js 5.3.0 with fit addon
+- **State Management**: Zustand 4.4.7
+- **Desktop Framework**: Electron 28.3.3
+- **Build Tool**: Vite 5.0.10
+- **UI**: Custom CSS with CSS variables for theming
 
----
-
-##  Project Structure
+### Project Structure
 
 ```
 null-ide/
- src/
-    main/           # Electron main process
-       main.ts     # IPC handlers, window management
-    preload/        # Preload scripts (security bridge)
-       preload.ts  # Exposed APIs to renderer
-    renderer/       # React frontend
-        components/ # UI components
-           layout/ # TopBar, MenuBar, Sidebar
-           panels/ # HackingTools, Utilities, Terminal
-        store/      # Zustand state management
-        App.tsx     # Main application
- build/              # Build assets (icons, installer scripts)
- dist/               # Compiled output
- release/            # Final installer output
+├── src/
+│   ├── main/              # Electron main process
+│   │   ├── main.ts        # Main entry point
+│   │   └── terminalManager.ts  # Terminal IPC handler
+│   ├── preload/           # Electron preload scripts
+│   │   └── preload.ts     # IPC bridge
+│   └── renderer/          # React frontend
+│       ├── src/
+│       │   ├── components/
+│       │   │   ├── modes/        # DeepZero & GalaxyMind
+│       │   │   ├── galaxymind/   # 38 utility tools
+│       │   │   ├── layout/       # UI layout components
+│       │   │   ├── panels/       # Sidebar panels
+│       │   │   ├── modals/       # Settings, About, Themes
+│       │   │   ├── icons/        # SVG icon components
+│       │   │   └── extensions/   # Theme extension system
+│       │   ├── store/            # Zustand state management
+│       │   ├── styles/           # Global CSS and themes
+│       │   └── utils/            # Theme manager utilities
+│       └── index.html
+├── dist/                  # Build output
+├── release/               # Packaged installers
+└── package.json
 ```
 
 ---
 
-##  Security & Privacy
+## 🔒 Privacy & Security
 
-### **Privacy First**
--  **No telemetry** - Zero data collection
--  **Local-only storage** - All data stays on your machine
--  **No cloud dependencies** - Works completely offline
--  **Open source** - Audit the code yourself
+### Privacy Commitments
 
-### **Ethical Use Warning**
- **Null IDE is designed for authorized security research, penetration testing, and educational purposes only.**
+- ✅ **100% Local Data Storage**: All files, settings, and data stay on your machine
+- ✅ **Zero Telemetry**: No usage tracking, analytics, or data collection
+- ✅ **No Cloud Connections**: Application works completely offline
+- ✅ **No Account Required**: No registration, login, or authentication
+- ✅ **Open Source**: Full source code available for audit
 
-**You must:**
-- Only use on systems you own or have explicit permission to test
-- Comply with all applicable laws and regulations
-- Respect responsible disclosure practices
+### Security Features
 
-**The developers are NOT responsible for misuse of this tool.**
+- **Sandboxed Execution**: Electron security best practices enforced
+- **Context Isolation**: Renderer and main processes properly isolated
+- **No Remote Code Execution**: All code runs locally
+- **Educational Tools**: Security testing tools for authorized penetration testing only
 
----
-
-##  Contributing
-
-Contributions are welcome! Here's how:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-tool`)
-3. **Commit** your changes (`git commit -m 'Add amazing tool'`)
-4. **Push** to branch (`git push origin feature/amazing-tool`)
-5. **Open** a Pull Request
+**⚠️ Legal Disclaimer**: Security testing tools are for authorized use only. Users are responsible for compliance with applicable laws and regulations. Unauthorized access to computer systems is illegal.
 
 ---
 
-##  License
+## 🤝 Contributing
 
-**MIT License**
+We welcome contributions! Here's how you can help:
 
-Copyright (c) 2026 NullSec
+### Development Workflow
 
----
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes
+4. Test thoroughly on both Windows and Linux
+5. Commit with descriptive messages: `git commit -m 'feat: Add amazing feature'`
+6. Push to your fork: `git push origin feature/amazing-feature`
+7. Open a Pull Request
 
-##  Known Issues
+### Contribution Guidelines
 
-- Terminal color scheme customization limited
-- Some tools require specific input formats
+- Follow TypeScript and React best practices
+- Maintain code style consistency with existing codebase
+- Add comments for complex logic
+- Test on both Windows and Linux before submitting
+- Update documentation for new features
+- Ensure zero compilation errors and warnings
 
-See [Issues](https://github.com/4fqr/null-ide/issues) for full list.
+### Areas for Contribution
 
----
-
-##  Support
-
-- **Issues**: [GitHub Issues](https://github.com/4fqr/null-ide/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/4fqr/null-ide/discussions)
-
----
-
-##  Built With
-
-- [Electron](https://www.electronjs.org/) - Desktop framework
-- [React](https://react.dev/) - UI library
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [Monaco Editor](https://microsoft.github.io/monaco-editor/) - Code editing
-- [Zustand](https://zustand-demo.pmnd.rs/) - State management
-- [Vite](https://vitejs.dev/) - Build tool
-- [electron-builder](https://www.electron.build/) - Installer creation
+- 🐛 Bug fixes and performance improvements
+- ✨ New utility tools for GalaxyMind mode
+- 🎨 Custom theme designs
+- 🌍 Internationalization (i18n)
+- 📚 Documentation improvements
+- 🧪 Additional test coverage
 
 ---
 
-<div align="center">
+## 📊 Project Status
 
-**Made with  by NullSec**
+### Version 3.0 (Current)
 
- *For hackers, by hackers* 
+**Release Date**: January 10, 2026
 
-[ Download](https://github.com/4fqr/null-ide/releases) | [ Report Bug](https://github.com/4fqr/null-ide/issues)
+**What's New**:
+- ✅ 9 new advanced security tools (Encryption, Packet Analyzer, HTTP Smuggling, CORS, OAuth)
+- ✅ Complete theme extension system with 8 built-in themes
+- ✅ Modal-based Extensions UI (centered popup)
+- ✅ Back navigation buttons in all utility tools
+- ✅ Terminal initialization fixes for improved stability
+- ✅ Linux support (AppImage, DEB, RPM)
+- ✅ Professional README and documentation
+- ✅ Total of 38 fully-functional tools
 
-</div>
+**Known Issues**:
+- None currently reported
+
+### Roadmap
+
+- [ ] macOS support (DMG installer)
+- [ ] Plugin system for community extensions
+- [ ] Collaborative editing features
+- [ ] Built-in Git client UI
+- [ ] Package manager integration
+- [ ] Debugging capabilities
+- [ ] Project templates
+- [ ] Code snippets library
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### MIT License Summary
+
+✅ Commercial use  
+✅ Modification  
+✅ Distribution  
+✅ Private use  
+❌ Liability  
+❌ Warranty  
+
+---
+
+## 🙏 Acknowledgments
+
+- **Monaco Editor** - The world-class code editor from Microsoft
+- **XTerm.js** - Full-featured terminal for the web
+- **Electron** - Build cross-platform desktop apps with web technologies
+- **React** - UI library for building user interfaces
+- **Zustand** - Minimal state management solution
+- **Vite** - Next generation frontend tooling
+
+---
+
+## 📞 Support
+
+### Getting Help
+
+- 📖 **Documentation**: Read this README and inline code comments
+- 🐛 **Bug Reports**: [Open an issue](https://github.com/4fqr/null-ide/issues) on GitHub
+- 💡 **Feature Requests**: [Submit an idea](https://github.com/4fqr/null-ide/issues) with the `enhancement` label
+- 💬 **Discussions**: Use GitHub Discussions for questions and community chat
+
+### Links
+
+- **Repository**: [https://github.com/4fqr/null-ide](https://github.com/4fqr/null-ide)
+- **Releases**: [https://github.com/4fqr/null-ide/releases](https://github.com/4fqr/null-ide/releases)
+- **Issues**: [https://github.com/4fqr/null-ide/issues](https://github.com/4fqr/null-ide/issues)
+
+---
+
+## 🌟 Star History
+
+If you find Null IDE useful, please consider starring the repository! ⭐
+
+---
+
+**Made with ❤️ by NullSec**  
+*Empowering security researchers and developers worldwide*
+
+**Version 3.0** | January 2026
