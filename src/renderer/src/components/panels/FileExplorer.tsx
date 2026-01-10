@@ -60,6 +60,11 @@ const getFileIcon = (fileName: string, isDirectory: boolean): string => {
 const FileExplorer: React.FC = () => {
   const [rootPath, setRootPath] = useState('');
   const [fileTree, setFileTree] = useState<FileItem[]>([]);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; item: FileItem | null } | null>(null);
+  const [showNewFileDialog, setShowNewFileDialog] = useState(false);
+  const [showNewFolderDialog, setShowNewFolderDialog] = useState(false);
+  const [newItemName, setNewItemName] = useState('');
+  const [selectedPath, setSelectedPath] = useState<string>('');
   const openTab = useStore((state) => state.openTab);
 
   const handleOpenDirectory = async () => {
@@ -67,7 +72,52 @@ const FileExplorer: React.FC = () => {
     if (!result.canceled && result.filePaths[0]) {
       const dirPath = result.filePaths[0];
       setRootPath(dirPath);
+      setSelectedPath(dirPath);
       await loadDirectory(dirPath, null);
+    }
+  };
+
+  const handleNewFile = () => {
+    if (!rootPath) return;
+    setShowNewFileDialog(true);
+    setNewItemName('');
+  };
+
+  const handleNewFolder = () => {
+    if (!rootPath) return;
+    setShowNewFolderDialog(true);
+    setNewItemName('');
+  };
+
+  const createNewFile = async () => {
+    if (!newItemName.trim()) return;
+    
+    const targetPath = selectedPath || rootPath;
+    const filePath = `${targetPath}\\${newItemName}`;
+    
+    const result = await window.electronAPI.fs.createFile(filePath);
+    if (result.success) {
+      setShowNewFileDialog(false);
+      setNewItemName('');
+      await loadDirectory(rootPath, null);
+    } else {
+      alert(`Failed to create file: ${result.error}`);
+    }
+  };
+
+  const createNewFolder = async () => {
+    if (!newItemName.trim()) return;
+    
+    const targetPath = selectedPath || rootPath;
+    const folderPath = `${targetPath}\\${newItemName}`;
+    
+    const result = await window.electronAPI.fs.createFolder(folderPath);
+    if (result.success) {
+      setShowNewFolderDialog(false);
+      setNewItemName('');
+      await loadDirectory(rootPath, null);
+    } else {
+      alert(`Failed to create folder: ${result.error}`);
     }
   };
 
@@ -228,6 +278,16 @@ const FileExplorer: React.FC = () => {
         <button className={styles.btnPrimary} onClick={handleOpenDirectory} title="Open Folder">
           📂 Open
         </button>
+        {rootPath && (
+          <>
+            <button className={styles.btnSecondary} onClick={handleNewFile} title="New File">
+              📄 File
+            </button>
+            <button className={styles.btnSecondary} onClick={handleNewFolder} title="New Folder">
+              📁 Folder
+            </button>
+          </>
+        )}
       </div>
 
       {rootPath && (
@@ -250,6 +310,52 @@ const FileExplorer: React.FC = () => {
           renderTree(fileTree)
         )}
       </div>
+
+      {showNewFileDialog && (
+        <div className={styles.dialogOverlay} onClick={() => setShowNewFileDialog(false)}>
+          <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
+            <h3>Create New File</h3>
+            <input
+              type="text"
+              value={newItemName}
+              onChange={(e) => setNewItemName(e.target.value)}
+              placeholder="filename.txt"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') createNewFile();
+                if (e.key === 'Escape') setShowNewFileDialog(false);
+              }}
+            />
+            <div className={styles.dialogButtons}>
+              <button onClick={createNewFile}>Create</button>
+              <button onClick={() => setShowNewFileDialog(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showNewFolderDialog && (
+        <div className={styles.dialogOverlay} onClick={() => setShowNewFolderDialog(false)}>
+          <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
+            <h3>Create New Folder</h3>
+            <input
+              type="text"
+              value={newItemName}
+              onChange={(e) => setNewItemName(e.target.value)}
+              placeholder="folder-name"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') createNewFolder();
+                if (e.key === 'Escape') setShowNewFolderDialog(false);
+              }}
+            />
+            <div className={styles.dialogButtons}>
+              <button onClick={createNewFolder}>Create</button>
+              <button onClick={() => setShowNewFolderDialog(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

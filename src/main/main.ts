@@ -207,6 +207,47 @@ ipcMain.handle('fs:stat', async (event, filePath: string) => {
   }
 });
 
+ipcMain.handle('fs:createFile', async (event, filePath: string) => {
+  try {
+    await fs.promises.writeFile(filePath, '', 'utf-8');
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+});
+
+ipcMain.handle('fs:createFolder', async (event, folderPath: string) => {
+  try {
+    await fs.promises.mkdir(folderPath, { recursive: false });
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+});
+
+ipcMain.handle('fs:delete', async (event, itemPath: string) => {
+  try {
+    const stats = await fs.promises.stat(itemPath);
+    if (stats.isDirectory()) {
+      await fs.promises.rmdir(itemPath, { recursive: true });
+    } else {
+      await fs.promises.unlink(itemPath);
+    }
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+});
+
+ipcMain.handle('fs:rename', async (event, oldPath: string, newPath: string) => {
+  try {
+    await fs.promises.rename(oldPath, newPath);
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+});
+
 /**
  * App info
  */

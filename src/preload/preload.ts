@@ -13,6 +13,10 @@ const fsAPI = {
   readDir: (dirPath: string) => ipcRenderer.invoke('fs:readDir', dirPath),
   exists: (filePath: string) => ipcRenderer.invoke('fs:exists', filePath),
   stat: (filePath: string) => ipcRenderer.invoke('fs:stat', filePath),
+  createFile: (filePath: string) => ipcRenderer.invoke('fs:createFile', filePath),
+  createFolder: (folderPath: string) => ipcRenderer.invoke('fs:createFolder', folderPath),
+  delete: (itemPath: string) => ipcRenderer.invoke('fs:delete', itemPath),
+  rename: (oldPath: string, newPath: string) => ipcRenderer.invoke('fs:rename', oldPath, newPath),
 };
 
 // Dialog API
