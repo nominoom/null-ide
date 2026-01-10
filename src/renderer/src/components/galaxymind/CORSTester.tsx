@@ -19,38 +19,11 @@ export default function CORSTester() {
     setTestResult('Testing CORS policy...\n');
 
     try {
-      // Simulate CORS test (in real implementation, this would make actual requests)
-      const tests = [
-        {
-          name: 'Null Origin',
-          origin: 'null',
-          description: 'Some servers incorrectly allow null origin',
-          vulnerable: Math.random() < 0.3
-        },
-        {
-          name: 'Arbitrary Origin',
-          origin: origin,
-          description: 'Check if arbitrary origins are allowed',
-          vulnerable: Math.random() < 0.2
-        },
-        {
-          name: 'Subdomain Bypass',
-          origin: origin.replace('://', '://malicious.'),
-          description: 'Test for weak subdomain validation',
-          vulnerable: Math.random() < 0.25
-        },
-        {
-          name: 'Pre-domain Wildcard',
-          origin: origin + '.attacker.com',
-          description: 'Check for suffix matching bypass',
-          vulnerable: Math.random() < 0.15
-        },
-        {
-          name: 'Credentials Reflection',
-          origin: origin,
-          description: 'Test if credentials are allowed with reflected origin',
-          vulnerable: Math.random() < 0.1
-        }
+      const testOrigins = [
+        { name: 'Null Origin', origin: 'null', description: 'Some servers incorrectly allow null origin' },
+        { name: 'Arbitrary Origin', origin: origin, description: 'Check if arbitrary origins are allowed' },
+        { name: 'Subdomain Bypass', origin: origin.replace('://', '://malicious.'), description: 'Test for weak subdomain validation' },
+        { name: 'Pre-domain Wildcard', origin: origin + '.attacker.com', description: 'Check for suffix matching bypass' },
       ];
 
       let results = `CORS Policy Test Results for ${targetUrl}\n`;
@@ -58,44 +31,88 @@ export default function CORSTester() {
       results += `Include Credentials: ${withCredentials}\n`;
       results += `${'='.repeat(60)}\n\n`;
 
-      tests.forEach((test, idx) => {
-        const status = test.vulnerable ? '⚠️  VULNERABLE' : '✓ Secure';
-        results += `Test ${idx + 1}: ${test.name}\n`;
-        results += `Origin: ${test.origin}\n`;
-        results += `Status: ${status}\n`;
-        results += `Description: ${test.description}\n`;
-        
-        if (test.vulnerable) {
-          results += `Response Headers (simulated):\n`;
-          results += `  Access-Control-Allow-Origin: ${test.origin}\n`;
-          if (withCredentials) {
-            results += `  Access-Control-Allow-Credentials: true\n`;
-          }
-          results += `  Access-Control-Allow-Methods: GET, POST, PUT, DELETE\n`;
-        }
-        results += `\n`;
-      });
+      let vulnerableTests = 0;
 
-      const vulnerableTests = tests.filter(t => t.vulnerable);
-      if (vulnerableTests.length > 0) {
+      for (const test of testOrigins) {
+        results += `Test: ${test.name}\n`;
+        results += `Origin: ${test.origin}\n`;
+        results += `Description: ${test.description}\n`;
+
+        try {
+          // Make actual HTTP request with Origin header
+          const response: any = await window.electronAPI.net.httpFetch(targetUrl, {
+            method: 'GET',
+            headers: { 'Origin': test.origin },
+            timeout: 5000
+          });
+
+          if (!response.success) {
+            results += `Status: ✗ Request failed: ${response.error}\n\n`;
+            continue;
+          }
+
+          const headers = response.headers || {};
+          const acaoHeader = headers['access-control-allow-origin'];
+          const acacHeader = headers['access-control-allow-credentials'];
+          const acamHeader = headers['access-control-allow-methods'];
+
+          results += `Response Status: ${response.status} ${response.statusText}\n`;
+          
+          if (acaoHeader) {
+            results += `  Access-Control-Allow-Origin: ${acaoHeader}\n`;
+            
+            // Check for vulnerabilities
+            if (acaoHeader === '*') {
+              vulnerableTests++;
+              results += `  ⚠️ VULNERABLE: Wildcard (*) allows any origin!\n`;
+            } else if (acaoHeader === test.origin) {
+              vulnerableTests++;
+              results += `  ⚠️ VULNERABLE: Origin is reflected without validation!\n`;
+            } else if (acaoHeader === 'null') {
+              vulnerableTests++;
+              results += `  ⚠️ VULNERABLE: Null origin allowed!\n`;
+            } else {
+              results += `  ✓ Origin not reflected\n`;
+            }
+          } else {
+            results += `  ✓ No CORS headers (restrictive)\n`;
+          }
+
+          if (acacHeader) {
+            results += `  Access-Control-Allow-Credentials: ${acacHeader}\n`;
+            if (acacHeader === 'true' && acaoHeader === '*') {
+              results += `  🚨 CRITICAL: Wildcard with credentials is invalid but dangerous!\n`;
+            }
+          }
+
+          if (acamHeader) {
+            results += `  Access-Control-Allow-Methods: ${acamHeader}\n`;
+          }
+
+        } catch (error: any) {
+          results += `Status: ✗ Error: ${error.message}\n`;
+        }
+
+        results += `\n`;
+      }
+
+      if (vulnerableTests > 0) {
         results += `\n${'='.repeat(60)}\n`;
-        results += `⚠️  FOUND ${vulnerableTests.length} POTENTIAL VULNERABILITIES\n`;
+        results += `⚠️  FOUND ${vulnerableTests} CORS VULNERABILITIES\n`;
         results += `\nRecommendations:\n`;
         results += `1. Implement strict origin validation (whitelist specific domains)\n`;
         results += `2. Never reflect arbitrary origins\n`;
         results += `3. Be cautious with Access-Control-Allow-Credentials: true\n`;
         results += `4. Validate origins against exact matches, not patterns\n`;
         results += `5. Avoid using "null" as an allowed origin\n`;
+        
+        // Generate exploit code
+        generateExploit({ origin: origin, credentials: withCredentials });
       } else {
         results += `\n✓ No CORS vulnerabilities detected in this test\n`;
       }
 
       setTestResult(results);
-
-      // Generate exploit code if vulnerable
-      if (vulnerableTests.length > 0) {
-        generateExploit(vulnerableTests[0]);
-      }
     } catch (error: any) {
       setTestResult(`Error testing CORS: ${error.message}`);
     }
