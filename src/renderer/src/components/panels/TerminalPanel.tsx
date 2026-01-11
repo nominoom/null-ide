@@ -55,10 +55,10 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
     xterm.open(terminalRef.current);
     fitAddon.current.fit();
 
-    // Spawn terminal process
-    window.electronAPI.terminal.spawn(terminalId, 'powershell.exe').then((res) => {
+    // Spawn terminal process (auto-detects shell based on OS)
+    window.electronAPI.terminal.spawn(terminalId).then((res) => {
       if (res.success) {
-        xterm.writeln('\x1b[1;32m✓\x1b[0m PowerShell Terminal Ready');
+        xterm.writeln('\x1b[1;32m✓\x1b[0m Terminal Ready');
         xterm.writeln('');
       } else {
         xterm.writeln(`\x1b[1;31m✗\x1b[0m Failed to start terminal: ${res.error}`);
@@ -145,7 +145,7 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
       <div className={styles.toolbar}>
         <div className={styles.title}>
           <span className={styles.icon}>▶️</span>
-          <span>PowerShell Terminal</span>
+          <span>Terminal</span>
         </div>
         <div className={styles.actions}>
           <button className={styles.btn} onClick={handleNewTerminal} title="New Terminal">

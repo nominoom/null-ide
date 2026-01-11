@@ -99,10 +99,10 @@ export default function ShellcodeGenerator() {
 
   return (
     <div className={styles.tool}>
+      <button className={styles.backButton} onClick={() => setActiveGalaxyTool(null)}>
+        ← Back
+      </button>
       <div className={styles.toolHeader}>
-        <button className={styles.backButton} onClick={() => setActiveGalaxyTool(null)}>
-          ← Back
-        </button>
         <div className={styles.toolTitle}>
           <span className={styles.toolIcon}>⚡</span>
           Shellcode Generator

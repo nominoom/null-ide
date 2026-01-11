@@ -97,11 +97,7 @@ const FileExplorer: React.FC = () => {
     
     const result = await window.electronAPI.fs.createFile(filePath);
     if (result.success) {
-      setShowNewFileDialog(false);
-      setNewItemName('');
-      await loadDirectory(rootPath, null);
-      
-      // Auto-open the newly created file
+      // Auto-open the newly created file FIRST
       const ext = newItemName.split('.').pop()?.toLowerCase() || 'txt';
       const languageMap: Record<string, string> = {
         js: 'javascript', jsx: 'javascript', ts: 'typescript', tsx: 'typescript',
@@ -119,6 +115,11 @@ const FileExplorer: React.FC = () => {
         content: '',
         modified: false,
       });
+      
+      // Then refresh the directory tree
+      setShowNewFileDialog(false);
+      setNewItemName('');
+      await loadDirectory(rootPath, null);
     } else {
       alert(`Failed to create file: ${result.error}`);
     }

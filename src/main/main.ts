@@ -435,14 +435,25 @@ ipcMain.handle('dialog:openDirectory', async () => {
  */
 const terminals = new Map<string, any>();
 
-ipcMain.handle('terminal:spawn', (event, terminalId: string, shell: string = 'powershell.exe', cwd?: string) => {
+ipcMain.handle('terminal:spawn', (event, terminalId: string, shell?: string, cwd?: string) => {
   try {
-    console.log(`Spawning terminal ${terminalId} with shell ${shell}`);
+    // Auto-detect shell based on OS
+    if (!shell) {
+      if (process.platform === 'win32') {
+        shell = 'powershell.exe';
+      } else if (process.platform === 'darwin') {
+        shell = '/bin/zsh'; // macOS default
+      } else {
+        shell = '/bin/bash'; // Linux default
+      }
+    }
+    
+    console.log(`Spawning terminal ${terminalId} with shell ${shell} on ${process.platform}`);
     const ptyProcess = spawn(shell, [], {
       cwd: cwd || process.cwd(),
       env: process.env,
       shell: true,
-      windowsHide: true,
+      windowsHide: process.platform === 'win32',
     });
 
     if (!ptyProcess || !ptyProcess.pid) {
