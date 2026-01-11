@@ -1,7 +1,7 @@
 {
   "name": "null-ide",
-  "version": "3.3.6",
-  "description": "The Ultimate Hacker's Code Editor & Security Toolkit - FIXED: Back button now visible (overflow issue), terminal stable (no shell nesting)",
+  "version": "3.3.7",
+  "description": "The Ultimate Hacker's Code Editor & Security Toolkit - FINAL FIX: Back button sticky+visible, terminal ResizeObserver, cross-platform ready",
   "main": "dist/main/main.js",
   "author": "NullSec",
   "license": "MIT",

@@ -4,7 +4,7 @@
 
 **🔥 Cross-Platform IDE with 49+ Security Tools + Discord RPC 🔥**
 
-[![Version](https://img.shields.io/badge/version-3.3.6-00ffaa.svg)](https://github.com/4fqr/null-ide/releases)
+[![Version](https://img.shields.io/badge/version-3.3.7-00ffaa.svg)](https://github.com/4fqr/null-ide/releases)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey.svg)]()
 [![Electron](https://img.shields.io/badge/electron-28.3.3-47848f.svg)](https://www.electronjs.org/)
@@ -30,51 +30,100 @@
 
 ## 📥 Installation
 
-### Windows
+### 🪟 Windows
 
-Download `Null-IDE-Installer.exe` from [Releases](https://github.com/4fqr/null-ide/releases)
+**Download**: [`Null-IDE-Installer.exe`](https://github.com/4fqr/null-ide/releases) (90.8 MB)
 
+**Install**:
 ```cmd
 Null-IDE-Installer.exe
 ```
+Follow wizard → Launch from Start Menu
 
-### Linux
+**Features**: PowerShell terminal, Discord RPC, All 49+ tools, File creation, Save All
 
-Linux installers (.AppImage, .deb, .rpm) must be built on a Linux system or via CI/CD. To build:
+---
 
-**On Linux:**
+### 🐧 Linux
+
+**Method 1: Build from Source** (Recommended)
+
 ```bash
+# Prerequisites
+sudo apt install nodejs npm git  # Ubuntu/Debian
+# OR
+sudo dnf install nodejs npm git  # Fedora/RHEL
+
+# Clone & build
 git clone https://github.com/4fqr/null-ide.git
 cd null-ide
 npm install
-npm run package:linux
+npm run build
+npx electron-builder --linux
 ```
 
-This generates:
-- `Null-IDE-3.3.3.AppImage` - Universal (works on all distros)
-- `null-ide_3.3.3_amd64.deb` - Debian/Ubuntu
-- `null-ide-3.3.3.x86_64.rpm` - Fedora/RHEL/CentOS
+**Outputs**:
+- `Null IDE-3.3.7.AppImage` - Universal (all distros)
+- `null-ide_3.3.7_amd64.deb` - Debian/Ubuntu/Mint
+- `null-ide-3.3.7.x86_64.rpm` - Fedora/RHEL/CentOS
 
-**Note for NixOS Users**: NixOS requires special handling for dynamically linked executables. Use the AppImage format or build within a NixOS development shell. See [NixOS documentation](https://nix.dev/permalink/stub-ld) for details.
+**Install Options**:
 
-**Install .deb:**
+**Ubuntu/Debian (.deb)**:
 ```bash
-sudo dpkg -i null-ide_3.3.3_amd64.deb
-sudo apt-get install -f  # Fix dependencies if needed
+sudo dpkg -i null-ide_3.3.7_amd64.deb
+sudo apt-get install -f  # Fix dependencies
 null-ide
 ```
 
-**Install .rpm:**
+**Fedora/RHEL (.rpm)**:
 ```bash
-sudo rpm -i null-ide-3.3.3.x86_64.rpm
+sudo dnf install null-ide-3.3.7.x86_64.rpm
 null-ide
 ```
 
-**Run AppImage:**
+**AppImage (Universal)**:
 ```bash
-chmod +x Null-IDE-3.3.3.AppImage
-./Null-IDE-3.3.3.AppImage
+chmod +x "Null IDE-3.3.7.AppImage"
+./"Null IDE-3.3.7.AppImage"
 ```
+
+**Arch Linux**:
+```bash
+git clone https://github.com/4fqr/null-ide.git
+cd null-ide
+makepkg -si
+```
+
+**NixOS**:
+```bash
+nix-shell -p nodejs electron
+npm install && npm run build
+npx electron-builder --linux appimage
+./"Null IDE-3.3.7.AppImage"
+```
+
+**Features**: Bash/Zsh terminal (auto-detect), Discord RPC, All tools, Cross-platform
+
+---
+
+### 🍎 macOS
+
+```bash
+# Install dependencies
+brew install node
+
+# Build
+git clone https://github.com/4fqr/null-ide.git
+cd null-ide
+npm install
+npm run build
+npx electron-builder --mac
+```
+
+Open `Null IDE-3.3.7.dmg` → Drag to Applications
+
+**Features**: Zsh terminal, Discord RPC, Native macOS UI
 
 ---
 

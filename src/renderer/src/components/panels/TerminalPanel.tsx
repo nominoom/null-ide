@@ -86,15 +86,42 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
 
     setTerminal(xterm);
 
+    // Add ResizeObserver to handle container size changes
+    const resizeObserver = new ResizeObserver(() => {
+      if (xterm && terminalRef.current) {
+        try {
+          fitAddon.current.fit();
+        } catch (e) {
+          // Ignore fit errors during rapid resizing
+        }
+      }
+    });
+    
+    if (terminalRef.current) {
+      resizeObserver.observe(terminalRef.current);
+    }
+
     return () => {
+      resizeObserver.disconnect();
       window.electronAPI.terminal.kill(terminalId);
       xterm.dispose();
     };
   }, [terminal, terminalId]);
 
   useEffect(() => {
-    if (terminal && isVisible) {
-      setTimeout(() => fitAddon.current.fit(), 100);
+    if (terminal && isVisible && terminalRef.current) {
+      // Force multiple fit attempts to ensure proper sizing
+      const fit = () => {
+        try {
+          fitAddon.current.fit();
+        } catch (e) {
+          console.error('Failed to fit terminal:', e);
+        }
+      };
+      
+      setTimeout(fit, 50);
+      setTimeout(fit, 150);
+      setTimeout(fit, 300);
     }
   }, [isVisible, terminal, height]);
 
