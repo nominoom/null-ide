@@ -3,7 +3,8 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   background: var(--color-bg-primary);
   animation: fadeIn 0.3s ease;
 }

@@ -452,7 +452,7 @@ ipcMain.handle('terminal:spawn', (event, terminalId: string, shell?: string, cwd
     const ptyProcess = spawn(shell, [], {
       cwd: cwd || process.cwd(),
       env: process.env,
-      shell: true,
+      shell: false, // Don't nest shells!
       windowsHide: process.platform === 'win32',
     });
 
