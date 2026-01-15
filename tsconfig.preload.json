@@ -4,12 +4,14 @@
     "module": "commonjs",
     "lib": ["ES2020", "DOM"],
     "outDir": "dist/preload",
+    "rootDir": "src/preload",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": false,
+    "composite": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/preload/**/*"]

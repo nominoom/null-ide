@@ -1,211 +1,227 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Terminal as XTerm } from 'xterm';
+import { useEffect, useRef, useState } from 'react';
+import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
+import { WebLinksAddon } from 'xterm-addon-web-links';
 import 'xterm/css/xterm.css';
-import styles from './TerminalPanel.module.css';
+import styles from './TerminalPanelMulti.module.css';
 
-interface TerminalInstance {
+interface TerminalTab {
   id: string;
   name: string;
-  terminal: XTerm;
+  terminal: Terminal;
   fitAddon: FitAddon;
 }
 
-interface TerminalPanelProps {
-  isVisible: boolean;
-  height: number;
-  onHeightChange: (height: number) => void;
-}
-
-const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeightChange }) => {
-  const terminalContainerRef = useRef<HTMLDivElement>(null);
-  const [terminals, setTerminals] = useState<TerminalInstance[]>([]);
+export default function TerminalPanelMulti() {
+  const [terminals, setTerminals] = useState<TerminalTab[]>([]);
   const [activeTerminalId, setActiveTerminalId] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isResizing, setIsResizing] = useState(false);
+  const [terminalHeight, setTerminalHeight] = useState(200);
 
   const createTerminal = () => {
-    const id = `term-${Date.now()}`;
-    const name = `Terminal ${terminals.length + 1}`;
-    
-    const xterm = new XTerm({
+    const terminalId = `term-${Date.now()}`;
+    const term = new Terminal({
       cursorBlink: true,
-      cursorStyle: 'block',
-      fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace",
-      fontSize: 13,
-      lineHeight: 1.4,
+      fontSize: 14,
+      fontFamily: 'Consolas, monospace',
       theme: {
-        background: '#050505',
-        foreground: '#f0f0f0',
-        cursor: '#00d9ff',
-        black: '#0a0a0a',
-        red: '#ff3366',
-        green: '#00ff88',
-        yellow: '#ffaa00',
-        blue: '#0088ff',
-        magenta: '#ff00ff',
-        cyan: '#00d9ff',
-        white: '#f0f0f0',
-        brightBlack: '#404040',
-        brightRed: '#ff5588',
-        brightGreen: '#00ffaa',
-        brightYellow: '#ffcc00',
-        brightBlue: '#00aaff',
-        brightMagenta: '#ff66ff',
-        brightCyan: '#00ffff',
-        brightWhite: '#ffffff',
-      },
-      scrollback: 10000,
-      allowTransparency: true,
+        background: '#1e1e1e',
+        foreground: '#cccccc'
+      }
     });
 
     const fitAddon = new FitAddon();
-    xterm.loadAddon(fitAddon);
+    term.loadAddon(fitAddon);
+    term.loadAddon(new WebLinksAddon());
 
-    const newTerminal: TerminalInstance = {
-      id,
-      name,
-      terminal: xterm,
-      fitAddon,
+    const newTab: TerminalTab = {
+      id: terminalId,
+      name: `Terminal ${terminals.length + 1}`,
+      terminal: term,
+      fitAddon
     };
 
-    setTerminals(prev => [...prev, newTerminal]);
-    setActiveTerminalId(id);
+    setTerminals(prev => [...prev, newTab]);
+    setActiveTerminalId(terminalId);
 
-    // Spawn terminal process after state update with proper retry logic
-    const initializeTerminal = () => {
-      const container = document.getElementById(`terminal-${id}`);
-      if (container && container.offsetParent !== null) { // Check if visible in DOM
-        xterm.open(container);
-        
-        // Fit with retry
-        try {
-          fitAddon.fit();
-        } catch (e) {
-          setTimeout(() => {
-            try { fitAddon.fit(); } catch { /* ignore */ }
-          }, 200);
+    // Wait for DOM to be ready before initializing
+    setTimeout(async () => {
+      const terminalElement = document.getElementById(terminalId);
+      if (terminalElement) {
+        term.open(terminalElement);
+        fitAddon.fit();
+
+        // Set up data listener with cleanup
+        const cleanupData = window.electronAPI.terminal.onData((id: string, data: string) => {
+          if (id === terminalId) {
+            term.write(data);
+          }
+        });
+
+        // Set up exit listener with cleanup
+        const cleanupExit = window.electronAPI.terminal.onExit((id: string, code: number | null) => {
+          if (id === terminalId) {
+            console.log(`Terminal ${terminalId} exited with code ${code}`);
+          }
+        });
+
+        // Store cleanup functions for later
+        (term as any)._cleanupFunctions = { cleanupData, cleanupExit };
+
+        // Handle terminal input
+        term.onData((data) => {
+          window.electronAPI.terminal.write(terminalId, data);
+        });
+
+        // Spawn the terminal process
+        await window.electronAPI.terminal.spawn(terminalId);
+
+        // Get terminal dimensions and resize
+        const dims = fitAddon.proposeDimensions();
+        if (dims) {
+          window.electronAPI.terminal.resize(terminalId, dims.cols, dims.rows);
         }
-
-        // Spawn PowerShell process
-        window.electronAPI.terminal.spawn(id, 'powershell.exe').then((res) => {
-          if (res.success) {
-            xterm.writeln('\x1b[1;32m✓\x1b[0m PowerShell Ready');
-            xterm.writeln('');
-          } else {
-            xterm.writeln(`\x1b[1;31m✗\x1b[0m Failed: ${res.error}`);
-          }
-        }).catch((err) => {
-          xterm.writeln(`\x1b[1;31m✗\x1b[0m Error: ${err.message}`);
-        });
-
-        // Setup data handlers
-        xterm.onData((data) => {
-          window.electronAPI.terminal.write(id, data);
-        });
-
-        window.electronAPI.terminal.onData((termId, data) => {
-          if (termId === id) {
-            xterm.write(data);
-          }
-        });
-
-        window.electronAPI.terminal.onExit((termId, code) => {
-          if (termId === id) {
-            xterm.writeln(`\n\x1b[33mProcess exited with code ${code}\x1b[0m`);
-          }
-        });
-      } else {
-        // Container not ready, retry with longer delay
-        console.log(`Terminal ${id} container not ready, retrying...`);
-        setTimeout(initializeTerminal, 200);
       }
-    };
-    
-    // Start initialization with longer initial delay
-    setTimeout(initializeTerminal, 500);
-
-    return newTerminal;
+    }, 50);
   };
 
-  const closeTerminal = (id: string) => {
-    const terminal = terminals.find(t => t.id === id);
-    if (terminal) {
-      window.electronAPI.terminal.kill(id);
-      terminal.terminal.dispose();
-      setTerminals(prev => prev.filter(t => t.id !== id));
-      
-      if (activeTerminalId === id) {
-        const remaining = terminals.filter(t => t.id !== id);
-        setActiveTerminalId(remaining.length > 0 ? remaining[0].id : null);
+  const closeTerminal = (terminalId: string) => {
+    const terminalToClose = terminals.find(t => t.id === terminalId);
+    if (!terminalToClose) return;
+
+    // Clean up event listeners BEFORE disposing
+    if ((terminalToClose.terminal as any)._cleanupFunctions) {
+      try {
+        (terminalToClose.terminal as any)._cleanupFunctions.cleanupData();
+        (terminalToClose.terminal as any)._cleanupFunctions.cleanupExit();
+      } catch (err) {
+        console.error('Error cleaning up terminal listeners:', err);
       }
+    }
+
+    // Kill the terminal process
+    try {
+      window.electronAPI.terminal.kill(terminalId);
+    } catch (err) {
+      console.error('Error killing terminal:', err);
+    }
+
+    // Dispose the terminal
+    try {
+      terminalToClose.terminal.dispose();
+    } catch (err) {
+      console.error('Error disposing terminal:', err);
+    }
+
+    // Update state
+    setTerminals(prevTerminals => {
+      const newTerminals = prevTerminals.filter(t => t.id !== terminalId);
+      return newTerminals;
+    });
+
+    // Update active terminal if we closed the active one
+    if (activeTerminalId === terminalId) {
+      const remaining = terminals.filter(t => t.id !== terminalId);
+      setActiveTerminalId(remaining.length > 0 ? remaining[0].id : null);
     }
   };
 
+  const switchTerminal = (terminalId: string) => {
+    setActiveTerminalId(terminalId);
+    setTimeout(() => {
+      const tab = terminals.find(t => t.id === terminalId);
+      if (tab) {
+        tab.fitAddon.fit();
+        // Resize terminal to match fit dimensions
+        const dims = tab.fitAddon.proposeDimensions();
+        if (dims) {
+          window.electronAPI.terminal.resize(terminalId, dims.cols, dims.rows);
+        }
+      }
+    }, 10);
+  };
+
   useEffect(() => {
-    // Always create initial terminal with proper delay
     if (terminals.length === 0) {
-      // Delay to ensure DOM is ready
-      const timer = setTimeout(() => {
-        createTerminal();
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    // Force create terminal when becoming visible if none exist
-    if (isVisible && terminals.length === 0) {
       createTerminal();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isVisible]);
 
-  useEffect(() => {
-    // Fit terminals when visible or when height/active terminal changes
-    if (terminals.length > 0) {
-      const fitTimer = setTimeout(() => {
-        terminals.forEach(t => {
-          if (t.id === activeTerminalId) {
-            try {
-              t.fitAddon.fit();
-            } catch (e) {
-              // Terminal may not be fully initialized yet
-              console.debug('Terminal fit skipped:', e);
-            }
-          }
-        });
-      }, isVisible ? 150 : 300); // Longer delay if not visible
-      
-      return () => clearTimeout(fitTimer);
-    }
-  }, [isVisible, height, activeTerminalId, terminals]);
-
-  useEffect(() => {
     return () => {
-      terminals.forEach(t => {
-        window.electronAPI.terminal.kill(t.id);
-        t.terminal.dispose();
+      // Cleanup all terminals when component unmounts
+      setTerminals(prevTerminals => {
+        prevTerminals.forEach(t => {
+          // Clean up event listeners
+          if ((t.terminal as any)._cleanupFunctions) {
+            (t.terminal as any)._cleanupFunctions.cleanupData();
+            (t.terminal as any)._cleanupFunctions.cleanupExit();
+          }
+          window.electronAPI.terminal.kill(t.id);
+          t.terminal.dispose();
+        });
+        return [];
       });
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsResizing(true);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      terminals.forEach(tab => {
+        tab.fitAddon.fit();
+        // Resize terminal to match fit dimensions
+        const dims = tab.fitAddon.proposeDimensions();
+        if (dims) {
+          window.electronAPI.terminal.resize(tab.id, dims.cols, dims.rows);
+        }
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [terminals]);
+
+  useEffect(() => {
+    let fitTimer: NodeJS.Timeout;
+
+    if (activeTerminalId) {
+      fitTimer = setTimeout(() => {
+        const tab = terminals.find(t => t.id === activeTerminalId);
+        if (tab) {
+          tab.fitAddon.fit();
+          // Resize terminal to match fit dimensions
+          const dims = tab.fitAddon.proposeDimensions();
+          if (dims) {
+            window.electronAPI.terminal.resize(activeTerminalId, dims.cols, dims.rows);
+          }
+        }
+      }, 100);
+    }
+
+    return () => {
+      if (fitTimer) clearTimeout(fitTimer);
+    };
+  }, [activeTerminalId, terminals]);
 
   useEffect(() => {
     if (!isResizing) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       const newHeight = window.innerHeight - e.clientY;
-      onHeightChange(Math.max(50, Math.min(800, newHeight)));
+      setTerminalHeight(Math.max(100, Math.min(600, newHeight)));
     };
 
     const handleMouseUp = () => {
       setIsResizing(false);
+      // Refit all terminals after resize
+      terminals.forEach(tab => {
+        tab.fitAddon.fit();
+        // Resize terminal to match fit dimensions
+        const dims = tab.fitAddon.proposeDimensions();
+        if (dims) {
+          window.electronAPI.terminal.resize(tab.id, dims.cols, dims.rows);
+        }
+      });
     };
 
     document.addEventListener('mousemove', handleMouseMove);
@@ -215,56 +231,49 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ isVisible, height, onHeig
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResizing, onHeightChange]);
+  }, [isResizing, terminals]);
 
   return (
-    <div 
-      className={styles.terminalPanel} 
-      style={{ 
-        height: isVisible ? `${height}px` : '0px',
-        display: isVisible ? 'flex' : 'none',
-      }}
-    >
-      <div className={styles.resizeHandle} onMouseDown={handleMouseDown} />
-      
-      <div className={styles.terminalHeader}>
-        <div className={styles.terminalTabs}>
-          {terminals.map(term => (
+    <div className={styles.terminalPanel} style={{ height: `${terminalHeight}px` }}>
+      <div
+        className={styles.resizeHandle}
+        onMouseDown={() => setIsResizing(true)}
+      />
+      <div className={styles.tabBar}>
+        <div className={styles.tabs}>
+          {terminals.map(tab => (
             <div
-              key={term.id}
-              className={`${styles.terminalTab} ${activeTerminalId === term.id ? styles.active : ''}`}
-              onClick={() => setActiveTerminalId(term.id)}
+              key={tab.id}
+              className={`${styles.tab} ${activeTerminalId === tab.id ? styles.active : ''}`}
+              onClick={() => switchTerminal(tab.id)}
             >
-              <span>{term.name}</span>
+              <span className={styles.tabName}>{tab.name}</span>
               <button
                 className={styles.closeButton}
                 onClick={(e) => {
                   e.stopPropagation();
-                  closeTerminal(term.id);
+                  closeTerminal(tab.id);
                 }}
               >
                 ×
               </button>
             </div>
           ))}
-          <button className={styles.newTerminalButton} onClick={createTerminal}>
-            + New Terminal
-          </button>
         </div>
+        <button className={styles.newTabButton} onClick={createTerminal}>
+          +
+        </button>
       </div>
-
-      <div className={styles.terminalContent} ref={terminalContainerRef}>
-        {terminals.map(term => (
+      <div className={styles.terminalContainer} ref={containerRef}>
+        {terminals.map(tab => (
           <div
-            key={term.id}
-            id={`terminal-${term.id}`}
-            className={styles.terminalInstance}
-            style={{ display: activeTerminalId === term.id ? 'block' : 'none' }}
+            key={tab.id}
+            id={tab.id}
+            className={styles.terminal}
+            style={{ display: activeTerminalId === tab.id ? 'block' : 'none' }}
           />
         ))}
       </div>
     </div>
   );
-};
-
-export default TerminalPanel;
+}

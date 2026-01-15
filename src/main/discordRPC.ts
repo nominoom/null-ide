@@ -4,10 +4,18 @@ const clientId = '1459478156120428606'; // You'll need to create a Discord app a
 
 let rpc: Client | null = null;
 let connected = false;
+let retryCount = 0;
+const MAX_RETRIES = 3;
 
 export function initDiscordRPC() {
   if (rpc) {
     console.log('Discord RPC already initialized');
+    return;
+  }
+
+  // Don't retry if we've already exceeded max retries
+  if (retryCount >= MAX_RETRIES) {
+    console.log('Discord RPC max retries exceeded. Not attempting to connect.');
     return;
   }
 
@@ -19,6 +27,7 @@ export function initDiscordRPC() {
       console.log('✅ Discord RPC connected successfully!');
       console.log('Make sure you uploaded assets (null-ide, code, idle) to Discord Developer Portal');
       connected = true;
+      retryCount = 0; // Reset retry count on successful connection
       // Set initial activity
       setTimeout(() => {
         updateActivity('Idling', null);
@@ -42,12 +51,19 @@ export function initDiscordRPC() {
       console.error('Failed to connect to Discord RPC:', err);
       console.error('Make sure Discord is running and the client ID is correct');
       connected = false;
-      // Retry after 5 seconds
-      setTimeout(() => {
-        console.log('Retrying Discord RPC connection...');
+      
+      // Retry with limit
+      retryCount++;
+      if (retryCount < MAX_RETRIES) {
+        setTimeout(() => {
+          console.log(`Retrying Discord RPC connection... (${retryCount}/${MAX_RETRIES})`);
+          rpc = null;
+          initDiscordRPC();
+        }, 5000);
+      } else {
+        console.log('Discord RPC connection failed after maximum retries. Giving up.');
         rpc = null;
-        initDiscordRPC();
-      }, 5000);
+      }
     });
   } catch (error) {
     console.error('Error initializing Discord RPC:', error);
@@ -91,11 +107,17 @@ export function clearActivity() {
 }
 
 export function disconnectDiscordRPC() {
-  if (rpc) {
-    rpc.destroy();
-    rpc = null;
-    connected = false;
+  if (rpc && connected) {
+    try {
+      rpc.destroy().catch((err: Error) => {
+        console.error('Error destroying Discord RPC:', err);
+      });
+    } catch (error) {
+      console.error('Error disconnecting Discord RPC:', error);
+    }
   }
+  rpc = null;
+  connected = false;
 }
 
 export function isDiscordConnected(): boolean {

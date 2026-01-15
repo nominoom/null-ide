@@ -10,6 +10,7 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": false,
+    "composite": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/main/**/*"]

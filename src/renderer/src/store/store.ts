@@ -119,7 +119,7 @@ export const useStore = create<UIState>((set) => ({
   // Initial state
   mode: 'code',
   leftSidebarVisible: true,
-  rightSidebarVisible: true,
+  rightSidebarVisible: false,
   terminalVisible: true,
   terminalHeight: 300,
   leftSidebarWidth: 250,

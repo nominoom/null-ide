@@ -5,7 +5,7 @@ import * as crypto from 'crypto';
 import * as net from 'net';
 import * as dns from 'dns';
 import { promisify } from 'util';
-import { spawn } from 'child_process';
+import * as pty from 'node-pty';
 import { initDiscordRPC, updateActivity, disconnectDiscordRPC, isDiscordConnected } from './discordRPC';
 
 const dnsResolve = promisify(dns.resolve);
@@ -39,7 +39,7 @@ function createWindow() {
     icon: path.join(__dirname, 'null_ide.png'),
     backgroundColor: '#0a0a0a',
     webPreferences: {
-      preload: path.join(__dirname, '../preload/preload.js'),
+      preload: path.join(__dirname, '../../../preload/preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
       webSecurity: true,
@@ -89,6 +89,16 @@ function createWindow() {
 
   mainWindow.on('closed', () => {
     console.log('Main window closed');
+    // Kill all terminal processes to prevent zombies
+    terminals.forEach((terminal, id) => {
+      try {
+        console.log(`Killing terminal ${id}`);
+        terminal.kill();
+      } catch (error) {
+        console.error(`Failed to kill terminal ${id}:`, error);
+      }
+    });
+    terminals.clear();
     mainWindow = null;
     deephatBrowserView = null;
   });
@@ -107,6 +117,9 @@ function createDeepHatView() {
     },
   });
 
+  // Set initial bounds to 0x0 (hidden) to prevent overlay on entire window
+  deephatBrowserView.setBounds({ x: 0, y: 0, width: 0, height: 0 });
+  
   mainWindow.addBrowserView(deephatBrowserView);
   deephatBrowserView.webContents.loadURL('https://app.deephat.ai/');
 }
@@ -433,7 +446,7 @@ ipcMain.handle('dialog:openDirectory', async () => {
 /**
  * Terminal operations
  */
-const terminals = new Map<string, any>();
+const terminals = new Map<string, pty.IPty>();
 
 ipcMain.handle('terminal:spawn', (event, terminalId: string, shell?: string, cwd?: string) => {
   try {
@@ -449,11 +462,14 @@ ipcMain.handle('terminal:spawn', (event, terminalId: string, shell?: string, cwd
     }
     
     console.log(`Spawning terminal ${terminalId} with shell ${shell} on ${process.platform}`);
-    const ptyProcess = spawn(shell, [], {
+    
+    // Use node-pty for proper PTY with echo and interactive mode
+    const ptyProcess = pty.spawn(shell, [], {
+      name: 'xterm-color',
+      cols: 80,
+      rows: 30,
       cwd: cwd || process.cwd(),
-      env: process.env,
-      shell: false, // Don't nest shells!
-      windowsHide: process.platform === 'win32',
+      env: process.env as { [key: string]: string },
     });
 
     if (!ptyProcess || !ptyProcess.pid) {
@@ -462,28 +478,19 @@ ipcMain.handle('terminal:spawn', (event, terminalId: string, shell?: string, cwd
 
     terminals.set(terminalId, ptyProcess);
 
-    ptyProcess.stdout?.on('data', (data) => {
+    // Handle data from terminal
+    ptyProcess.onData((data: string) => {
       if (mainWindow && !mainWindow.isDestroyed()) {
-        mainWindow.webContents.send('terminal:data', terminalId, data.toString());
+        mainWindow.webContents.send('terminal:data', terminalId, data);
       }
     });
 
-    ptyProcess.stderr?.on('data', (data) => {
+    // Handle terminal exit
+    ptyProcess.onExit(({ exitCode }: { exitCode: number; signal?: number }) => {
+      console.log(`Terminal ${terminalId} exited with code ${exitCode}`);
       if (mainWindow && !mainWindow.isDestroyed()) {
-        mainWindow.webContents.send('terminal:data', terminalId, data.toString());
+        mainWindow.webContents.send('terminal:exit', terminalId, exitCode);
       }
-    });
-
-    ptyProcess.on('exit', (code) => {
-      console.log(`Terminal ${terminalId} exited with code ${code}`);
-      if (mainWindow && !mainWindow.isDestroyed()) {
-        mainWindow.webContents.send('terminal:exit', terminalId, code);
-      }
-      terminals.delete(terminalId);
-    });
-
-    ptyProcess.on('error', (err) => {
-      console.error(`Terminal ${terminalId} error:`, err);
       terminals.delete(terminalId);
     });
 
@@ -497,24 +504,43 @@ ipcMain.handle('terminal:spawn', (event, terminalId: string, shell?: string, cwd
 
 ipcMain.handle('terminal:write', (event, terminalId: string, data: string) => {
   const terminal = terminals.get(terminalId);
-  if (terminal && terminal.stdin) {
-    terminal.stdin.write(data);
-    return { success: true };
+  if (terminal) {
+    try {
+      terminal.write(data);
+      return { success: true };
+    } catch (error: any) {
+      console.error(`Failed to write to terminal ${terminalId}:`, error);
+      return { success: false, error: error.message };
+    }
   }
   return { success: false, error: 'Terminal not found' };
 });
 
 ipcMain.handle('terminal:resize', (event, terminalId: string, cols: number, rows: number) => {
-  // For basic terminals, we can't resize, but we return success
-  return { success: true };
+  const terminal = terminals.get(terminalId);
+  if (terminal) {
+    try {
+      terminal.resize(cols, rows);
+      return { success: true };
+    } catch (error: any) {
+      console.error(`Failed to resize terminal ${terminalId}:`, error);
+      return { success: false, error: error.message };
+    }
+  }
+  return { success: false, error: 'Terminal not found' };
 });
 
 ipcMain.handle('terminal:kill', (event, terminalId: string) => {
   const terminal = terminals.get(terminalId);
   if (terminal) {
-    terminal.kill();
-    terminals.delete(terminalId);
-    return { success: true };
+    try {
+      terminal.kill();
+      terminals.delete(terminalId);
+      return { success: true };
+    } catch (error: any) {
+      console.error(`Failed to kill terminal ${terminalId}:`, error);
+      return { success: false, error: error.message };
+    }
   }
   return { success: false, error: 'Terminal not found' };
 });

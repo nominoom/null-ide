@@ -7,6 +7,12 @@ const RightSidebar: React.FC = () => {
   const mode = useStore((state) => state.mode);
   const rightSidebarWidth = useStore((state) => state.rightSidebarWidth);
   const setRightSidebarWidth = useStore((state) => state.setRightSidebarWidth);
+  
+  // Monitor modal states to hide BrowserView when modals are open
+  const themesOpen = useStore((state) => state.themesOpen);
+  const settingsOpen = useStore((state) => state.settingsOpen);
+  const aboutOpen = useStore((state) => state.aboutOpen);
+  
   const [isResizing, setIsResizing] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -62,11 +68,18 @@ const RightSidebar: React.FC = () => {
       }
     };
 
-    updatePosition();
-    window.electronAPI.deephat.toggle(true);
+    // Hide BrowserView if any modal is open, show it otherwise
+    const anyModalOpen = themesOpen || settingsOpen || aboutOpen;
+    
+    if (!anyModalOpen) {
+      updatePosition();
+      window.electronAPI.deephat.toggle(true);
+    } else {
+      window.electronAPI.deephat.toggle(false);
+    }
 
     const resizeObserver = new ResizeObserver(updatePosition);
-    if (containerRef.current) {
+    if (containerRef.current && !anyModalOpen) {
       resizeObserver.observe(containerRef.current);
     }
 
@@ -74,7 +87,7 @@ const RightSidebar: React.FC = () => {
       resizeObserver.disconnect();
       window.electronAPI.deephat.toggle(false);
     };
-  }, []);
+  }, [themesOpen, settingsOpen, aboutOpen]);
 
   const handleReload = () => {
     window.electronAPI.deephat.reload();

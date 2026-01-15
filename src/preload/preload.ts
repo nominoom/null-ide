@@ -73,10 +73,16 @@ const terminalAPI = {
   resize: (terminalId: string, cols: number, rows: number) =>
     ipcRenderer.invoke('terminal:resize', terminalId, cols, rows),
   kill: (terminalId: string) => ipcRenderer.invoke('terminal:kill', terminalId),
-  onData: (callback: (terminalId: string, data: string) => void) =>
-    ipcRenderer.on('terminal:data', (event, terminalId, data) => callback(terminalId, data)),
-  onExit: (callback: (terminalId: string, code: number) => void) =>
-    ipcRenderer.on('terminal:exit', (event, terminalId, code) => callback(terminalId, code)),
+  onData: (callback: (terminalId: string, data: string) => void) => {
+    const handler = (_event: any, terminalId: string, data: string) => callback(terminalId, data);
+    ipcRenderer.on('terminal:data', handler);
+    return () => ipcRenderer.removeListener('terminal:data', handler);
+  },
+  onExit: (callback: (terminalId: string, code: number) => void) => {
+    const handler = (_event: any, terminalId: string, code: number) => callback(terminalId, code);
+    ipcRenderer.on('terminal:exit', handler);
+    return () => ipcRenderer.removeListener('terminal:exit', handler);
+  },
 };
 
 // Discord RPC API

@@ -2,7 +2,7 @@
   "name": "null-ide",
   "version": "3.4.0",
   "description": "The Ultimate Hacker's Code Editor & Security Toolkit - COMPLETE REBUILD: ToolWrapper with visible back button, working terminal, all 49 tools fixed",
-  "main": "dist/main/main.js",
+  "main": "dist/main/src/main/main.js",
   "author": "NullSec",
   "license": "MIT",
   "private": true,
@@ -26,10 +26,12 @@
     "@xterm/xterm": "^5.3.0",
     "discord-rpc": "^4.0.1",
     "monaco-editor": "^0.45.0",
+    "node-pty": "^1.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "xterm": "^5.3.0",
     "xterm-addon-fit": "^0.8.0",
+    "xterm-addon-web-links": "^0.9.0",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
@@ -44,6 +46,7 @@
     "cross-env": "^7.0.3",
     "electron": "^28.1.0",
     "electron-builder": "^24.9.1",
+    "electron-rebuild": "^3.2.9",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2",
@@ -68,6 +71,7 @@
     ],
     "win": {
       "icon": "build/icon.png",
+      "sign": null,
       "target": [
         {
           "target": "nsis",
