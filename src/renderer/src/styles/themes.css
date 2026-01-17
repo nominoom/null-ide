@@ -15,6 +15,14 @@
   --color-success: #00ff88;
   --color-warning: #ffaa00;
   --color-error: #ff3366;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #000000;
+  --monaco-bg-image: none;
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 1;
 }
 
 /* Theme: Cyber Purple */
@@ -34,6 +42,14 @@
   --color-success: #66ff99;
   --color-warning: #ffaa66;
   --color-error: #ff6699;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #0a0012;
+  --monaco-bg-image: none;
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 1;
 }
 
 /* Theme: Matrix Green */
@@ -53,6 +69,14 @@
   --color-success: #00ff88;
   --color-warning: #ffff00;
   --color-error: #ff0000;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #000000;
+  --monaco-bg-image: none;
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 1;
 }
 
 /* Theme: Nord */
@@ -72,6 +96,14 @@
   --color-success: #a3be8c;
   --color-warning: #ebcb8b;
   --color-error: #bf616a;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #2e3440;
+  --monaco-bg-image: none;
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 1;
 }
 
 /* Theme: Dracula */
@@ -91,6 +123,14 @@
   --color-success: #50fa7b;
   --color-warning: #ffb86c;
   --color-error: #ff5555;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #282a36;
+  --monaco-bg-image: none;
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 1;
 }
 
 /* Theme: Tokyo Night */
@@ -110,6 +150,14 @@
   --color-success: #9ece6a;
   --color-warning: #e0af68;
   --color-error: #f7768e;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #1a1b26;
+  --monaco-bg-image: none;
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 1;
 }
 
 /* Theme: Gruvbox Dark */
@@ -129,6 +177,14 @@
   --color-success: #b8bb26;
   --color-warning: #fabd2f;
   --color-error: #fb4934;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #282828;
+  --monaco-bg-image: none;
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 1;
 }
 
 /* Theme: One Dark Pro */
@@ -148,4 +204,417 @@
   --color-success: #98c379;
   --color-warning: #e5c07b;
   --color-error: #e06c75;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #282c34;
+  --monaco-bg-image: none;
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 1;
+}
+
+/* Theme: Cosmic Void */
+:root[data-theme="cosmic-void"] {
+  --color-bg-primary: #0a0a15;
+  --color-bg-secondary: #0f0f1e;
+  --color-bg-tertiary: #151526;
+  --color-bg-elevated: #1a1a30;
+  --color-bg-hover: #20203a;
+  --color-accent: #7b68ee;
+  --color-accent-dim: #6a5acd;
+  --color-text-primary: #e8e8ff;
+  --color-text-secondary: #b8b8d8;
+  --color-text-tertiary: #8888a8;
+  --color-border: #2a2a45;
+  --color-border-subtle: #1f1f35;
+  --color-success: #88ffbb;
+  --color-warning: #ffdd88;
+  --color-error: #ff6b9d;
+  
+  /* Monaco Editor Specific - Cosmic Background */
+  --monaco-bg-color: #000000;
+  --monaco-bg-image: url('../utils/b6361a29570cbfaee8eb79976c7da274.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.35;
+}
+
+/* Theme: Digital Matrix */
+:root[data-theme="digital-matrix"] {
+  --color-bg-primary: #0d0d0d;
+  --color-bg-secondary: #121212;
+  --color-bg-tertiary: #1a1a1a;
+  --color-bg-elevated: #222222;
+  --color-bg-hover: #2a2a2a;
+  --color-accent: #00ffcc;
+  --color-accent-dim: #00ddaa;
+  --color-text-primary: #00ffcc;
+  --color-text-secondary: #00ccaa;
+  --color-text-tertiary: #009988;
+  --color-border: #1a3333;
+  --color-border-subtle: #0f2222;
+  --color-success: #00ff88;
+  --color-warning: #ffcc00;
+  --color-error: #ff3366;
+  
+  /* Monaco Editor Specific - Digital Background */
+  --monaco-bg-color: #000000;
+  --monaco-bg-image: url('../utils/c9640f238f2b6bac2a701ea44b806ea5.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.4;
+}
+
+/* Theme: Neon City */
+:root[data-theme="neon-city"] {
+  --color-bg-primary: #0a0a14;
+  --color-bg-secondary: #0f0f1c;
+  --color-bg-tertiary: #151524;
+  --color-bg-elevated: #1a1a2c;
+  --color-bg-hover: #202034;
+  --color-accent: #ff00ff;
+  --color-accent-dim: #dd00dd;
+  --color-text-primary: #ffccff;
+  --color-text-secondary: #dd99dd;
+  --color-text-tertiary: #aa66aa;
+  --color-border: #3a2a4a;
+  --color-border-subtle: #2a1a3a;
+  --color-success: #00ff99;
+  --color-warning: #ffaa00;
+  --color-error: #ff0066;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #000000;
+  --monaco-bg-image: url('../utils/0777caa029b9495d3d236a573720fe40.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.4;
+}
+
+/* Theme: Purple Nebula */
+:root[data-theme="purple-nebula"] {
+  --color-bg-primary: #0d0a14;
+  --color-bg-secondary: #120f1c;
+  --color-bg-tertiary: #1a1526;
+  --color-bg-elevated: #221a30;
+  --color-bg-hover: #2a2038;
+  --color-accent: #bb88ff;
+  --color-accent-dim: #9966dd;
+  --color-text-primary: #e8d9ff;
+  --color-text-secondary: #c8a9dd;
+  --color-text-tertiary: #9877aa;
+  --color-border: #3a2a4a;
+  --color-border-subtle: #2a1a3a;
+  --color-success: #88ffbb;
+  --color-warning: #ffbb88;
+  --color-error: #ff7799;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #0a0615;
+  --monaco-bg-image: url('../utils/09a71852c69402ab6826d3f2b76c316c.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.45;
+}
+
+/* Theme: Ocean Depths */
+:root[data-theme="ocean-depths"] {
+  --color-bg-primary: #050a12;
+  --color-bg-secondary: #0a0f1a;
+  --color-bg-tertiary: #0f1422;
+  --color-bg-elevated: #14192a;
+  --color-bg-hover: #1a1f32;
+  --color-accent: #00ccff;
+  --color-accent-dim: #00aadd;
+  --color-text-primary: #d9f0ff;
+  --color-text-secondary: #a9d0ee;
+  --color-text-tertiary: #7799bb;
+  --color-border: #1a3a4a;
+  --color-border-subtle: #0f2a3a;
+  --color-success: #00ffaa;
+  --color-warning: #ffcc66;
+  --color-error: #ff6688;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #020812;
+  --monaco-bg-image: url('../utils/0d402198976bdfdf517c20a506fc1832.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.4;
+}
+
+/* Theme: Crimson Tech */
+:root[data-theme="crimson-tech"] {
+  --color-bg-primary: #140a0a;
+  --color-bg-secondary: #1c0f0f;
+  --color-bg-tertiary: #261515;
+  --color-bg-elevated: #301a1a;
+  --color-bg-hover: #382020;
+  --color-accent: #ff4466;
+  --color-accent-dim: #dd2244;
+  --color-text-primary: #ffd9dd;
+  --color-text-secondary: #ddaaaa;
+  --color-text-tertiary: #aa7777;
+  --color-border: #4a2a2a;
+  --color-border-subtle: #3a1a1a;
+  --color-success: #66ff99;
+  --color-warning: #ffaa44;
+  --color-error: #ff2255;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #0a0505;
+  --monaco-bg-image: url('../utils/28220cca79ee77f34f107db9d49ccc61.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.35;
+}
+
+/* Theme: Emerald Forest */
+:root[data-theme="emerald-forest"] {
+  --color-bg-primary: #0a140a;
+  --color-bg-secondary: #0f1c0f;
+  --color-bg-tertiary: #152615;
+  --color-bg-elevated: #1a301a;
+  --color-bg-hover: #203820;
+  --color-accent: #44ff88;
+  --color-accent-dim: #22dd66;
+  --color-text-primary: #d9ffd9;
+  --color-text-secondary: #aaddaa;
+  --color-text-tertiary: #77aa77;
+  --color-border: #2a4a2a;
+  --color-border-subtle: #1a3a1a;
+  --color-success: #66ff88;
+  --color-warning: #ffcc44;
+  --color-error: #ff6655;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #050a05;
+  --monaco-bg-image: url('../utils/2843d7656ef2aa41e61f20926c9664f7.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.4;
+}
+
+/* Theme: Sunset Horizon */
+:root[data-theme="sunset-horizon"] {
+  --color-bg-primary: #140c08;
+  --color-bg-secondary: #1c110a;
+  --color-bg-tertiary: #26160d;
+  --color-bg-elevated: #301a10;
+  --color-bg-hover: #382014;
+  --color-accent: #ff8844;
+  --color-accent-dim: #dd6622;
+  --color-text-primary: #ffe8cc;
+  --color-text-secondary: #ddbb99;
+  --color-text-tertiary: #aa8866;
+  --color-border: #4a3020;
+  --color-border-subtle: #3a2010;
+  --color-success: #88ff66;
+  --color-warning: #ffaa22;
+  --color-error: #ff4466;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #0a0604;
+  --monaco-bg-image: url('../utils/35896e64e0450ff15f3474af18074700.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.35;
+}
+
+/* Theme: Arctic Aurora */
+:root[data-theme="arctic-aurora"] {
+  --color-bg-primary: #080c12;
+  --color-bg-secondary: #0a1018;
+  --color-bg-tertiary: #0d1520;
+  --color-bg-elevated: #101a28;
+  --color-bg-hover: #142030;
+  --color-accent: #44ccff;
+  --color-accent-dim: #22aadd;
+  --color-text-primary: #d9f8ff;
+  --color-text-secondary: #aad8ee;
+  --color-text-tertiary: #77a8bb;
+  --color-border: #204a5a;
+  --color-border-subtle: #103a4a;
+  --color-success: #66ffaa;
+  --color-warning: #ffdd66;
+  --color-error: #ff6688;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #040810;
+  --monaco-bg-image: url('../utils/4080b41446d83d045e4c6bc3c7423ca8.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.4;
+}
+
+/* Theme: Golden Hour */
+:root[data-theme="golden-hour"] {
+  --color-bg-primary: #140e08;
+  --color-bg-secondary: #1c140a;
+  --color-bg-tertiary: #261a0d;
+  --color-bg-elevated: #302010;
+  --color-bg-hover: #382614;
+  --color-accent: #ffcc44;
+  --color-accent-dim: #ddaa22;
+  --color-text-primary: #fff0cc;
+  --color-text-secondary: #ddcc99;
+  --color-text-tertiary: #aa9966;
+  --color-border: #4a3820;
+  --color-border-subtle: #3a2810;
+  --color-success: #88ff66;
+  --color-warning: #ffaa44;
+  --color-error: #ff5566;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #0a0804;
+  --monaco-bg-image: url('../utils/46bd3736854b9cbf79e99bf97eb08045.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.35;
+}
+
+/* Theme: Violet Dream */
+:root[data-theme="violet-dream"] {
+  --color-bg-primary: #0e0a14;
+  --color-bg-secondary: #140f1c;
+  --color-bg-tertiary: #1a1526;
+  --color-bg-elevated: #201a30;
+  --color-bg-hover: #262038;
+  --color-accent: #aa77ff;
+  --color-accent-dim: #8855dd;
+  --color-text-primary: #e8d9ff;
+  --color-text-secondary: #c8a9dd;
+  --color-text-tertiary: #9877aa;
+  --color-border: #3a2a4a;
+  --color-border-subtle: #2a1a3a;
+  --color-success: #88ffcc;
+  --color-warning: #ffaa88;
+  --color-error: #ff6699;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #080514;
+  --monaco-bg-image: url('../utils/860930a1e4325e942accb3ad25153a2a.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.45;
+}
+
+/* Theme: Midnight Blue */
+:root[data-theme="midnight-blue"] {
+  --color-bg-primary: #080a14;
+  --color-bg-secondary: #0a0f1c;
+  --color-bg-tertiary: #0d1426;
+  --color-bg-elevated: #101930;
+  --color-bg-hover: #141f38;
+  --color-accent: #5588ff;
+  --color-accent-dim: #3366dd;
+  --color-text-primary: #dde8ff;
+  --color-text-secondary: #aac8ee;
+  --color-text-tertiary: #7798bb;
+  --color-border: #2a3a5a;
+  --color-border-subtle: #1a2a4a;
+  --color-success: #66ffaa;
+  --color-warning: #ffbb66;
+  --color-error: #ff6688;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #040812;
+  --monaco-bg-image: url('../utils/998290c88932dc9e9a3b115e5c1b48ae.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.4;
+}
+
+/* Theme: Coral Reef */
+:root[data-theme="coral-reef"] {
+  --color-bg-primary: #0a1214;
+  --color-bg-secondary: #0f181c;
+  --color-bg-tertiary: #152026;
+  --color-bg-elevated: #1a2830;
+  --color-bg-hover: #203038;
+  --color-accent: #ff7788;
+  --color-accent-dim: #dd5566;
+  --color-text-primary: #ffe8dd;
+  --color-text-secondary: #ddc8bb;
+  --color-text-tertiary: #aa9888;
+  --color-border: #3a4a4a;
+  --color-border-subtle: #2a3a3a;
+  --color-success: #66ffaa;
+  --color-warning: #ffcc77;
+  --color-error: #ff5577;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #050a0c;
+  --monaco-bg-image: url('../utils/cc786c50378d3eff8dcfb0884a4994f6.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.4;
+}
+
+/* Theme: Fire Ember */
+:root[data-theme="fire-ember"] {
+  --color-bg-primary: #140a06;
+  --color-bg-secondary: #1c0f08;
+  --color-bg-tertiary: #26150a;
+  --color-bg-elevated: #301a0c;
+  --color-bg-hover: #382010;
+  --color-accent: #ff6633;
+  --color-accent-dim: #dd4411;
+  --color-text-primary: #ffddc8;
+  --color-text-secondary: #ddaa88;
+  --color-text-tertiary: #aa7755;
+  --color-border: #4a3020;
+  --color-border-subtle: #3a2010;
+  --color-success: #88ff66;
+  --color-warning: #ffaa22;
+  --color-error: #ff3344;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #0a0503;
+  --monaco-bg-image: url('../utils/d4aa2073fe6345ef4bc47350e9e94358.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.35;
+}
+
+/* Theme: Jade Mist */
+:root[data-theme="jade-mist"] {
+  --color-bg-primary: #0a140e;
+  --color-bg-secondary: #0f1c14;
+  --color-bg-tertiary: #15261a;
+  --color-bg-elevated: #1a3020;
+  --color-bg-hover: #203826;
+  --color-accent: #66ffaa;
+  --color-accent-dim: #44dd88;
+  --color-text-primary: #d9ffe8;
+  --color-text-secondary: #aaddc8;
+  --color-text-tertiary: #77aa98;
+  --color-border: #2a4a3a;
+  --color-border-subtle: #1a3a2a;
+  --color-success: #77ffaa;
+  --color-warning: #ffdd88;
+  --color-error: #ff6677;
+  
+  /* Monaco Editor Specific */
+  --monaco-bg-color: #050a08;
+  --monaco-bg-image: url('../utils/f37de9b2e2fde65cb055fbffb4753fcc.jpg');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: bottom right;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.4;
 }

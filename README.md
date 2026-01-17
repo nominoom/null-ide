@@ -273,6 +273,6 @@ MIT License - Copyright (c) 2026 NullSec
 
 Made with 💀 by [NullSec](https://github.com/4fqr)
 
-[⬆ Back to Top](#null-ide--the-ultimate-hackers-code-editor--security-toolkit)
+[⬆ Back to Top](#null-ide--the-ultimate-hackers-code-editor--security-toolkit) | Join the server! [server](https://discord.gg/FjQsEHvsDY)
 
 </div>

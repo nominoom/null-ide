@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, BrowserView } from 'electron';
+import { app, BrowserWindow, ipcMain, BrowserView, powerMonitor } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as crypto from 'crypto';
@@ -7,6 +7,7 @@ import * as dns from 'dns';
 import { promisify } from 'util';
 import * as pty from 'node-pty';
 import { initDiscordRPC, updateActivity, disconnectDiscordRPC, isDiscordConnected } from './discordRPC';
+
 
 const dnsResolve = promisify(dns.resolve);
 const dnsReverse = promisify(dns.reverse);
@@ -49,6 +50,19 @@ function createWindow() {
   });
 
   console.log('Window created, loading URL...');
+  
+  // Track if this is the first load
+  let isFirstLoad = true;
+  
+  mainWindow.webContents.on('did-finish-load', () => {
+    if (isFirstLoad) {
+      console.log('First load complete, reloading to ensure proper initialization...');
+      isFirstLoad = false;
+      mainWindow?.webContents.reload();
+    } else {
+      console.log('Content loaded successfully');
+    }
+  });
   
   mainWindow.once('ready-to-show', () => {
     console.log('Window ready, showing...');
@@ -559,6 +573,35 @@ app.whenReady().then(() => {
   console.log('App ready, creating window...');
   createWindow();
   console.log('Window created successfully');
+  
+  // Power monitoring to watch for sleep/wake behaviors
+  powerMonitor.on('suspend', () => {
+    console.log('System going to sleep');
+  });
+
+  powerMonitor.on('resume', () => {
+    console.log('System waking up - forcing repaint');
+    
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      // Force the main window to repaint instead of reload
+      mainWindow.invalidateShadow();
+      mainWindow.webContents.invalidate();
+      
+      // Hide and show to force full re-render
+      mainWindow.hide();
+      setTimeout(() => {
+        mainWindow?.show();
+      }, 100);
+    }
+    
+    // Handle DeepHat BrowserView separately with a small delay
+    if (deephatBrowserView && !deephatBrowserView.webContents.isDestroyed()) {
+      setTimeout(() => {
+        deephatBrowserView?.webContents.invalidate();
+        deephatBrowserView?.webContents.reload();
+      }, 150);
+    }
+  });
   
   // Initialize Discord Rich Presence immediately
   console.log('Initializing Discord RPC...');

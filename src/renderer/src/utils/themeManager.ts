@@ -71,6 +71,126 @@ export const defaultThemes: Theme[] = [
     author: 'Null IDE',
     version: '1.0.0',
     builtIn: true
+  },
+  {
+    id: 'cosmic-void',
+    name: 'Cosmic Void',
+    description: 'Deep space theme with cosmic background',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'digital-matrix',
+    name: 'Digital Matrix',
+    description: 'Cyberpunk digital matrix background',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'neon-city',
+    name: 'Neon City',
+    description: 'Vibrant cyberpunk cityscape',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'purple-nebula',
+    name: 'Purple Nebula',
+    description: 'Ethereal purple space clouds',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'ocean-depths',
+    name: 'Ocean Depths',
+    description: 'Deep blue underwater atmosphere',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'crimson-tech',
+    name: 'Crimson Tech',
+    description: 'Red-tinted technological theme',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'emerald-forest',
+    name: 'Emerald Forest',
+    description: 'Natural green tones',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'sunset-horizon',
+    name: 'Sunset Horizon',
+    description: 'Warm orange and pink hues',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'arctic-aurora',
+    name: 'Arctic Aurora',
+    description: 'Cool cyan and blue lights',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'golden-hour',
+    name: 'Golden Hour',
+    description: 'Warm golden afternoon glow',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'violet-dream',
+    name: 'Violet Dream',
+    description: 'Soft purple dreamscape',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'midnight-blue',
+    name: 'Midnight Blue',
+    description: 'Deep blue night atmosphere',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'coral-reef',
+    name: 'Coral Reef',
+    description: 'Vibrant coral and teal',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'fire-ember',
+    name: 'Fire Ember',
+    description: 'Warm orange and red embers',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
+  },
+  {
+    id: 'jade-mist',
+    name: 'Jade Mist',
+    description: 'Soft green misty atmosphere',
+    author: 'Null IDE',
+    version: '1.0.0',
+    builtIn: true
   }
 ];
 

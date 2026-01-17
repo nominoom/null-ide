@@ -6,6 +6,47 @@
   overflow: hidden;
 }
 
+/* Monaco Editor Background Override */
+.editorArea :global(.monaco-editor) {
+  background-color: var(--monaco-bg-color) !important;
+  background-image: var(--monaco-bg-image) !important;
+  background-size: var(--monaco-bg-size) !important;
+  background-position: var(--monaco-bg-position) !important;
+  background-repeat: var(--monaco-bg-repeat) !important;
+}
+
+/* Make Monaco's internal layers transparent to show background */
+.editorArea :global(.monaco-editor-background),
+.editorArea :global(.monaco-editor .view-lines),
+.editorArea :global(.monaco-editor .margin),
+.editorArea :global(.monaco-editor .overflow-guard),
+.editorArea :global(.monaco-editor .minimap),
+.editorArea :global(.monaco-editor .minimap-slider) {
+  background: transparent !important;
+}
+
+/* Make minimap semi-transparent */
+.editorArea :global(.monaco-editor .minimap) {
+  opacity: 0.5 !important;
+}
+
+/* Background image layer with opacity */
+.editorArea :global(.monaco-editor)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--monaco-bg-image);
+  background-size: var(--monaco-bg-size);
+  background-position: var(--monaco-bg-position);
+  background-repeat: var(--monaco-bg-repeat);
+  opacity: var(--monaco-bg-opacity);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .empty {
   width: 100%;
   height: 100%;

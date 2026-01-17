@@ -108,6 +108,23 @@ export default function ThemeExtensions() {
   --color-success: #00ff88;
   --color-warning: #ffaa00;
   --color-error: #ff3366;
+  
+  /* Monaco Editor - Solid Color Example */
+  --monaco-bg-color: #000000;
+  --monaco-bg-image: none;
+  --monaco-bg-size: cover;
+  --monaco-bg-position: center;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 1;
+  
+  /* Monaco Editor - Image Example (uncomment to use):
+  --monaco-bg-color: #000000;
+  --monaco-bg-image: url('https://example.com/background.png');
+  --monaco-bg-size: cover;
+  --monaco-bg-position: center;
+  --monaco-bg-repeat: no-repeat;
+  --monaco-bg-opacity: 0.3;
+  */
 }`;
     setThemeCSS(template);
   };
@@ -234,13 +251,27 @@ export default function ThemeExtensions() {
         <h3>Creating Custom Themes</h3>
         <p>Themes use CSS variables to customize the IDE appearance. Required variables:</p>
         <ul>
-          <li><code>--color-bg-primary/secondary/tertiary/elevated/hover</code> - Background colors</li>
-          <li><code>--color-accent/accent-dim</code> - Accent colors</li>
+          <li><code>--color-bg-primary/secondary/tertiary/elevated/hover</code> - Background colors for UI</li>
+          <li><code>--color-accent/accent-dim</code> - Accent colors for highlights</li>
           <li><code>--color-text-primary/secondary/tertiary</code> - Text colors</li>
           <li><code>--color-border/border-subtle</code> - Border colors</li>
           <li><code>--color-success/warning/error</code> - Status colors</li>
         </ul>
-        <p>Use the `:root[data-theme="your-theme-id"]` selector to scope your theme variables.</p>
+        
+        <h4 style={{ marginTop: '1rem' }}>Monaco Editor Customization</h4>
+        <p>Customize the code editor background with these optional variables:</p>
+        <ul>
+          <li><code>--monaco-bg-color</code> - Solid background color (hex/rgb)</li>
+          <li><code>--monaco-bg-image</code> - Background image URL or <code>none</code></li>
+          <li><code>--monaco-bg-size</code> - Image size (<code>cover</code>, <code>contain</code>, etc.)</li>
+          <li><code>--monaco-bg-position</code> - Image position (<code>center</code>, <code>top left</code>, etc.)</li>
+          <li><code>--monaco-bg-repeat</code> - Image repeat (<code>no-repeat</code>, <code>repeat</code>, etc.)</li>
+          <li><code>--monaco-bg-opacity</code> - Transparency (0.0 to 1.0)</li>
+        </ul>
+        
+        <p><strong>Example - Solid Color:</strong> Set <code>--monaco-bg-color: #000000;</code> and <code>--monaco-bg-image: none;</code></p>
+        <p><strong>Example - Background Image:</strong> Set <code>--monaco-bg-image: url('https://example.com/bg.png');</code> with <code>--monaco-bg-opacity: 0.3;</code> for subtle effect</p>
+        <p>Use the `:root[data-theme="your-theme-id"]` selector to scope your theme variables. Click "Load Template" above to see a complete example.</p>
       </div>
     </div>
   );

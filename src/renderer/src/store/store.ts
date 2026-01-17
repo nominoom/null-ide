@@ -91,6 +91,9 @@ interface UIState {
   setActiveLeftPanel: (panel: string) => void;
   setActiveGalaxyTool: (tool: string | null) => void;
   
+  newFile: () => void;
+  openFile: () => void;
+  saveFile: () => void;
   openTab: (tab: EditorTab) => void;
   closeTab: (tabId: string) => void;
   closeAllTabs: () => void;
@@ -232,6 +235,10 @@ Integrated PowerShell terminals with:
 **No Cloud** - Everything runs locally for maximum security.
 
 ---
+## Discord! Join our Discord community for support, updates, and discussions!
+
+[Join Null IDE Discord](https://discord.gg/NU4X797g6j)
+---
 
 **v3.0 Updates**: 9 new advanced tools, terminal fixes, theme extension system, 100% working tools, zero errors
 `,
@@ -265,6 +272,102 @@ Integrated PowerShell terminals with:
     toolResults: [result, ...state.toolResults].slice(0, 100) // Keep last 100
   })),
   clearToolResults: () => set({ toolResults: [] }),
+  
+  newFile: () => {
+    const newTab: EditorTab = {
+      id: `file-${Date.now()}`,
+      path: '',
+      name: 'Untitled',
+      language: 'plaintext',
+      content: '',
+      modified: false,
+    };
+    set((state) => ({
+      tabs: [...state.tabs, newTab],
+      activeTabId: newTab.id,
+    }));
+  },
+  
+  openFile: async () => {
+    try {
+      const result = await window.electronAPI.dialog.openFile();
+      if (result && !result.canceled && result.filePaths.length > 0) {
+        const filePath = result.filePaths[0];
+        const fileResult = await window.electronAPI.fs.readFile(filePath);
+        
+        // Check if file read was successful
+        if (!fileResult.success || !fileResult.content) {
+          console.error('Failed to read file:', fileResult.error);
+          return;
+        }
+        
+        const content = fileResult.content; // Extract actual content string
+        const fileName = filePath.split(/[\\\/]/).pop() || 'file';
+        const ext = fileName.split('.').pop()?.toLowerCase() || 'txt';
+        
+        const languageMap: Record<string, string> = {
+          js: 'javascript', ts: 'typescript', tsx: 'typescript', jsx: 'javascript',
+          py: 'python', java: 'java', cpp: 'cpp', c: 'c', cs: 'csharp',
+          html: 'html', css: 'css', scss: 'scss', json: 'json',
+          md: 'markdown', xml: 'xml', yaml: 'yaml', yml: 'yaml',
+          sh: 'shell', bash: 'shell', ps1: 'powershell',
+        };
+        
+        const newTab: EditorTab = {
+          id: `file-${Date.now()}`,
+          path: filePath,
+          name: fileName,
+          language: languageMap[ext] || 'plaintext',
+          content,
+          modified: false,
+        };
+        
+        set((state) => {
+          const existingTab = state.tabs.find((t) => t.path === filePath);
+          if (existingTab) {
+            return { activeTabId: existingTab.id };
+          }
+          return {
+            tabs: [...state.tabs, newTab],
+            activeTabId: newTab.id,
+          };
+        });
+      }
+    } catch (error) {
+      console.error('Failed to open file:', error);
+    }
+  },
+  
+  saveFile: async () => {
+    const state = useStore.getState();
+    const activeTab = state.tabs.find((t) => t.id === state.activeTabId);
+    if (!activeTab) return;
+    
+    try {
+      let filePath = activeTab.path;
+      
+      if (!filePath) {
+        const result = await window.electronAPI.dialog.saveFile();
+        if (result && !result.canceled && result.filePath) {
+          filePath = result.filePath;
+        } else {
+          return;
+        }
+      }
+      
+      await window.electronAPI.fs.writeFile(filePath, activeTab.content);
+      
+      set((state) => ({
+        tabs: state.tabs.map((tab) =>
+          tab.id === activeTab.id
+            ? { ...tab, path: filePath, name: filePath.split(/[\\\/]/).pop() || tab.name, modified: false }
+            : tab
+        ),
+      }));
+    } catch (error) {
+      console.error('Failed to save file:', error);
+    }
+  },
   
   openTab: (tab) =>
     set((state) => {
